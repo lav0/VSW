@@ -9,7 +9,30 @@ m_p(a_d_p)
 // lav 14/10/13 written.
 //
 {
+  if (a_d_p < 0) {
+    // p must be greater than zero
+    _ASSERT(0);
+    a_d_p = -a_d_p;
+    m_vc2 = m_vc2.get_reverted();
+  }
   m_d_defined = !m_vc2.is_zero_vector();
+}
+
+//=============================================================================
+matLine2D::matLine2D(
+  double a_d_x1, double a_d_y1, double a_d_x2, double a_d_y2
+)
+//
+// lav 14/10/13 written.
+//
+{
+  matPoint2D pn1, pn2;
+  pn1.X = a_d_x1;
+  pn1.Y = a_d_y1;
+  pn2.X = a_d_x2;
+  pn2.Y = a_d_y2;
+
+  *this = matLine2D(pn1, pn2);
 }
 
 //=============================================================================
@@ -100,6 +123,77 @@ bool matLine2D::get_y_by_x(const double a_d_x, double& a_d_y_out) const
   }
 
   a_d_y_out = (m_p - m_vc2.get_point().X * a_d_x) / m_vc2.get_point().Y;
+
+  return true;
+}
+
+//=============================================================================
+bool matLine2D::is_point_on(const matPoint2D& a_pn, double a_d_tolerance) const
+//
+// lav 14/10/13 written.
+//
+{
+  return abs(m_vc2.scal_prod(a_pn) - m_p) < a_d_tolerance;
+}
+
+//=============================================================================
+bool matLine2D::is_equal(const matLine2D& a_ln) const
+//
+// lav 14/10/13 written.
+//
+{
+  _ASSERT(m_p >= 0);
+  _ASSERT(a_ln.m_p >= 0);
+
+  return m_vc2.is_parallel(a_ln.m_vc2) && IS_ZERO(m_p - a_ln.m_p);
+}
+
+//=============================================================================
+bool matLine2D::is_parallel(const matLine2D& a_ln) const
+//
+// lav 14/10/13 written.
+//
+{
+  return m_vc2.is_colinear(a_ln.m_vc2);
+}
+
+//=============================================================================
+bool matLine2D::is_orthogonal(const matLine2D& a_ln) const
+//
+// lav 14/10/13 written.
+//
+{
+  return m_vc2.is_orthogonal(a_ln.m_vc2);
+}
+
+//=============================================================================
+bool matLine2D::get_intersection(
+  const matLine2D& a_ln, 
+  boost::shared_ptr<matPoint2D> shp_point
+) const
+//
+// Using Kramer's method
+//
+///////////////////////////////////////////////////////////////////////////////
+//
+// lav 14/10/13 written.
+//
+{
+  if (is_parallel(a_ln)) {
+    shp_point->X = 0;
+    shp_point->Y = 0;
+    return false;
+  }
+
+  double d_det_x = m_p*a_ln.m_vc2.get_point().Y - a_ln.m_p*m_vc2.get_point().Y;
+  double d_det_y = a_ln.m_p*m_vc2.get_point().X - m_p*a_ln.m_vc2.get_point().X;
+  double d_delta = m_vc2.cross_prod_z(a_ln.m_vc2);
+
+  // to prevent a warning use (b_value == false) instead of (!b_value)
+  _ASSERT(IS_ZERO(d_delta) == false);
+
+  shp_point->X = d_det_x / d_delta;
+  shp_point->Y = d_det_y / d_delta;
 
   return true;
 }

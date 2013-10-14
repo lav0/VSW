@@ -88,7 +88,7 @@ const matVector2D matVector2D::get_normalized_vector() const
   double d_norm = get_norm();
 
   if (IS_ZERO(d_norm)) {
-    // to be careful take a look if this is happening
+    // be careful and take a look if this is happening
     _ASSERT(0); 
     return matVector2D(0.0, 0.0);
   }
@@ -166,6 +166,27 @@ const matPoint2D matVector2D::get_point() const
   pn2.Y = m_y;
 
   return pn2;
+}
+
+//=============================================================================
+const matVector2D matVector2D::get_reverted() const
+//
+// lav 12/10/13 written.
+//
+{
+  return matVector2D(-m_x, -m_y);
+}
+
+//=============================================================================
+matVector2D& matVector2D::operator=(const matVector2D& a_vc2)
+//
+// lav 12/10/13 written.
+//
+{
+  m_x = a_vc2.m_x;
+  m_y = a_vc2.m_y;
+
+  return *this;
 }
 
 //=============================================================================

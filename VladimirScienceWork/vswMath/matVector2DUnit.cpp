@@ -2,6 +2,16 @@
 #include "matVector2DUnit.h"
 
 //=============================================================================
+matVector2DUnit::matVector2DUnit(matVector2D a_vc2)
+  : matVector2D(a_vc2)
+//
+// lav 14/10/13 written.
+//
+{
+  normalize();
+}
+
+//=============================================================================
 matVector2DUnit::matVector2DUnit(double a_d_x, double a_d_y)
   : matVector2D(a_d_x, a_d_y)
 //

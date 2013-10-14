@@ -41,8 +41,11 @@ public: /* MEMBER FUNCTIONS */
   double cross_prod_z(const matVector2D&) const;
 
   const matVector2D get_normalized_vector() const;
+  const matVector2D get_reverted() const;
   const matVector2D operator+(const matVector2D&) const;
   const matVector2D operator-(const matVector2D&) const;
+  
+  matVector2D& operator=(const matVector2D&);
 
 public: /* ACCESSORS */
 
