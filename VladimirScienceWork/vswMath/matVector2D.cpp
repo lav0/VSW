@@ -34,6 +34,16 @@ matVector2D::matVector2D(matPoint2D a_pn_first, matPoint2D a_pn_second)
 }
 
 //=============================================================================
+void matVector2D::become(double a_d_x, double a_d_y)
+//
+// lav 12/10/13 written.
+//
+{
+  m_x = a_d_x;
+  m_y = a_d_y;
+}
+
+//=============================================================================
 double matVector2D::get_squared_norm() const
 //
 // lav 12/10/13 written.
@@ -78,7 +88,8 @@ const matVector2D matVector2D::get_normalized_vector() const
   double d_norm = get_norm();
 
   if (IS_ZERO(d_norm)) {
-    assert(0);
+    // to be careful take a look if this is happening
+    _ASSERT(0); 
     return matVector2D(0.0, 0.0);
   }
   if (IS_ZERO(d_norm - 1)) {
@@ -127,6 +138,15 @@ bool matVector2D::is_antiparallel(const matVector2D& a_vc2) const
 }
 
 //=============================================================================
+bool matVector2D::is_zero_vector() const
+//
+// lav 12/10/13 written.
+//
+{
+  return IS_ZERO(get_norm());
+}
+
+//=============================================================================
 void matVector2D::normalize()
 //
 // lav 12/10/13 written.
@@ -155,5 +175,14 @@ const matVector2D matVector2D::operator+(const matVector2D& a_vc2) const
 //
 {
   return matVector2D(m_x + a_vc2.m_x, m_y + a_vc2.m_y);
+}
+
+//=============================================================================
+const matVector2D matVector2D::operator-(const matVector2D& a_vc2) const
+//
+// lav 12/10/13 written.
+//
+{
+  return matVector2D(m_x - a_vc2.m_x, m_y - a_vc2.m_y);
 }
 //=============================================================================

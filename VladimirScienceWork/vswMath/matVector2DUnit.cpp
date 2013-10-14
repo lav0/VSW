@@ -43,3 +43,13 @@ double matVector2DUnit::get_norm() const
 }
 
 //=============================================================================
+void matVector2DUnit::become(double a_d_x, double a_d_y)
+//
+// lav 12/10/13 written.
+//
+{
+  matVector2D::become(a_d_x, a_d_y);
+
+  normalize();
+}
+//=============================================================================

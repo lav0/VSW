@@ -65,6 +65,7 @@
     <ClInclude Include="matVector2DUnit.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="matLine2D.cpp" />
     <ClCompile Include="matVector2D.cpp" />
     <ClCompile Include="matVector2DUnit.cpp" />
   </ItemGroup>
