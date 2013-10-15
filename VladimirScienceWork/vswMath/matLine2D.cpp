@@ -15,7 +15,7 @@ m_p(a_d_p)
     a_d_p = -a_d_p;
     m_vc2 = m_vc2.get_reverted();
   }
-  m_d_defined = !m_vc2.is_zero_vector();
+  m_b_defined = !m_vc2.is_zero_vector();
 }
 
 //=============================================================================
@@ -41,9 +41,17 @@ matLine2D::matLine2D(matPoint2D a_pn1, matPoint2D a_pn2)
 // lav 14/10/13 written.
 //
 {
-  m_d_defined = define_by_two_points(a_pn1, a_pn2);
+  m_b_defined = define_by_two_points(a_pn1, a_pn2);
 }
 
+//=============================================================================
+matLine2D::~matLine2D()
+//
+// lav 14/10/13 written.
+//
+{
+   
+}
 //=============================================================================
 bool matLine2D::define_by_common_equation(
   double a_x_coef, 
@@ -59,6 +67,8 @@ bool matLine2D::define_by_common_equation(
 // lav 14/10/13 written.
 //
 {  
+  _ASSERT(m_b_defined);
+
   int i_sign = (a_free_coef < 0) ? 1 : -1;
 
   try {
@@ -103,7 +113,7 @@ bool matLine2D::get_x_by_y(const double a_d_y, double& a_d_x_out) const
 // lav 14/10/13 written.
 //
 {
-  if (!m_d_defined || m_vc2.is_colinear(matVector2D(0.0, 1.0))) {
+  if (!m_b_defined || m_vc2.is_colinear(matVector2D(0.0, 1.0))) {
     return false;
   }
 
@@ -118,7 +128,7 @@ bool matLine2D::get_y_by_x(const double a_d_x, double& a_d_y_out) const
 // lav 14/10/13 written.
 //
 {
-  if (!m_d_defined || m_vc2.is_colinear(matVector2D(1.0, 0.0))) {
+  if (!m_b_defined || m_vc2.is_colinear(matVector2D(1.0, 0.0))) {
     return false;
   }
 
@@ -133,6 +143,8 @@ bool matLine2D::is_point_on(const matPoint2D& a_pn, double a_d_tolerance) const
 // lav 14/10/13 written.
 //
 {
+  _ASSERT(m_b_defined);
+
   return abs(m_vc2.scal_prod(a_pn) - m_p) < a_d_tolerance;
 }
 
@@ -142,8 +154,16 @@ bool matLine2D::is_equal(const matLine2D& a_ln) const
 // lav 14/10/13 written.
 //
 {
+  _ASSERT(m_b_defined);
   _ASSERT(m_p >= 0);
   _ASSERT(a_ln.m_p >= 0);
+  
+  if (IS_ZERO(m_p)) {
+    // Pitfall situation. Lines might be equal having
+    // their definition's vectors being antiparallel in case
+    // of offset (m_p) being zero
+    return IS_ZERO(a_ln.m_p) && is_parallel(a_ln);
+  }
 
   return m_vc2.is_parallel(a_ln.m_vc2) && IS_ZERO(m_p - a_ln.m_p);
 }
@@ -154,6 +174,8 @@ bool matLine2D::is_parallel(const matLine2D& a_ln) const
 // lav 14/10/13 written.
 //
 {
+  _ASSERT(m_b_defined);
+
   return m_vc2.is_colinear(a_ln.m_vc2);
 }
 
@@ -163,6 +185,8 @@ bool matLine2D::is_orthogonal(const matLine2D& a_ln) const
 // lav 14/10/13 written.
 //
 {
+  _ASSERT(m_b_defined);
+
   return m_vc2.is_orthogonal(a_ln.m_vc2);
 }
 
@@ -179,6 +203,7 @@ bool matLine2D::get_intersection(
 // lav 14/10/13 written.
 //
 {
+  _ASSERT(m_b_defined && a_ln.is_defined());
   if (is_parallel(a_ln)) {
     shp_point->X = 0;
     shp_point->Y = 0;
@@ -196,6 +221,24 @@ bool matLine2D::get_intersection(
   shp_point->Y = d_det_y / d_delta;
 
   return true;
+}
+
+//=============================================================================
+bool matLine2D::is_defined() const
+//
+// lav 14/10/13 written.
+//
+{
+  return m_b_defined;
+}
+
+//=============================================================================
+void matLine2D::set_defined(bool a_b_value)
+//
+// lav 14/10/13 written.
+//
+{
+  m_b_defined = a_b_value;
 }
 
 //=============================================================================

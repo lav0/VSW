@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/weak_ptr.hpp>
 
 #include "matVector2DUnit.h"
 
@@ -10,10 +11,12 @@ class matLine2D
 
 public: /* CONSTRUCTORS */
 
-  matLine2D() : m_vc2(1,0), m_p(0), m_d_defined(false) {}
+  matLine2D() : m_vc2(1,0), m_p(0), m_b_defined(false) {}
   matLine2D(matVector2DUnit, double);
   matLine2D(double, double, double, double);
   matLine2D(matPoint2D, matPoint2D);
+
+  ~matLine2D();
 
 protected: /* INNER METHODS */
 
@@ -24,7 +27,7 @@ protected: /* INNER METHODS */
 
 public: /* MEMBER FUNCTIONS */
 
-  bool is_point_on(const matPoint2D&, double tolerance) const;
+  bool is_point_on(const matPoint2D&, double tolerance = _ZERO) const;
   bool is_parallel(const matLine2D&) const;
   bool is_orthogonal(const matLine2D&) const;
   bool is_equal(const matLine2D&) const;
@@ -38,7 +41,14 @@ public: /* MEMBER FUNCTIONS */
 public: /* ACCESSORS */
 
   const matVector2DUnit& get_normal() const;
+
   double get_coef() const;
+
+  bool is_defined() const;
+
+protected: /* ACCESSORS */
+
+  void set_defined(bool a_b_value);
 
 private: /* MEMBERS */
 
@@ -51,5 +61,5 @@ private: /* MEMBERS */
 
   double m_p;
 
-  bool m_d_defined;
+  bool m_b_defined;
 };

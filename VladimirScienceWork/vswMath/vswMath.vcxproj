@@ -54,6 +54,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>C:\Boost\boost_1_54_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -63,11 +64,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="matLine2D.h" />
+    <ClInclude Include="matLine2DSegment.h" />
     <ClInclude Include="matVector2D.h" />
     <ClInclude Include="matVector2DUnit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="matLine2D.cpp" />
+    <ClCompile Include="matLine2DSegment.cpp" />
     <ClCompile Include="matVector2D.cpp" />
     <ClCompile Include="matVector2DUnit.cpp" />
   </ItemGroup>
