@@ -1,22 +1,23 @@
-﻿Build started 16.10.2013 16:56:58.
-     1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" on node 3 (build target(s)).
-     1>InitializeBuildStatus:
+﻿Build started 17.10.2013 0:25:27.
+     1>Project "C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\tstMath.lastbuildstate".
+       InitializeBuildStatus:
          Creating "Debug\tstMath.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Boost\boost_1_54_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt tstMain.cpp
          tstMain.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\tstMath.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.lib" /MACHINE:X86 Debug\tstMain.obj
-         C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib
-         LINK : C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe not found or not built by the last incremental link; performing full link
-         tstMath.vcxproj -> C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\tstMath.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.lib" /MACHINE:X86 Debug\tstMain.obj
+         C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib
+         tstMath.vcxproj -> C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe;#1" /manifest Debug\tstMath.exe.intermediate.manifest
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe;#1" /manifest Debug\tstMath.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\tstMath.unsuccessfulbuild".
          Touching "Debug\tstMath.lastbuildstate".
-     1>Done Building Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.14
+Time Elapsed 00:00:10.81

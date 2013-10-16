@@ -65,12 +65,14 @@
   <ItemGroup>
     <ClInclude Include="matLine2D.h" />
     <ClInclude Include="matLine2DSegment.h" />
+    <ClInclude Include="matTriangle.h" />
     <ClInclude Include="matVector2D.h" />
     <ClInclude Include="matVector2DUnit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="matLine2D.cpp" />
     <ClCompile Include="matLine2DSegment.cpp" />
+    <ClCompile Include="matTriangle.cpp" />
     <ClCompile Include="matVector2D.cpp" />
     <ClCompile Include="matVector2DUnit.cpp" />
   </ItemGroup>

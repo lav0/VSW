@@ -2,7 +2,7 @@
 #include <conio.h>
 #include <cstdlib>
 
-#include "../vswMath/matLine2DSegment.h"
+#include "../vswMath/matTriangle.h"
 
 #ifndef min
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
@@ -233,6 +233,21 @@ bool run_segment_intersection(
 }
 
 //=============================================================================
+bool run_triangle()
+//
+// lav 16/10/13 written.
+//
+{
+  matTriangle triangle(
+    matPoint2DConstr(2,2),
+    matPoint2DConstr(6,3),
+    matPoint2DConstr(1,7)
+  );
+
+  return triangle.segment_test();
+}
+
+//=============================================================================
 void show(bool a_b, char* a_c_info)
 //
 // lav 13/10/13 written.
@@ -371,6 +386,12 @@ int main()
       "[Segment intersection testing]");
     show(run_segment_intersection(6,3,4,2, 6,3,4.00000001,2, 6,3, IP_SAME),
       "[Segment intersection testing]");
+  }
+
+  std::cout << std::endl;
+
+  { // Triangle testing
+    show(run_triangle(), "[Triangle testing]");
   }
 
   std::cout << std::endl << "Passed: " << s_passed <<
