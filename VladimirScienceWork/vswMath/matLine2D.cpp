@@ -162,7 +162,7 @@ bool matLine2D::is_equal(const matLine2D& a_ln) const
     // Pitfall situation. Lines might be equal having
     // their definition's vectors being antiparallel in case
     // of offset (m_p) being zero
-    return IS_ZERO(a_ln.m_p) && is_parallel(a_ln);
+    return abs(m_p - a_ln.m_p)<_LINE_DIFF && is_parallel(a_ln);
   }
 
   return m_vc2.is_parallel(a_ln.m_vc2) && IS_ZERO(m_p - a_ln.m_p);
@@ -204,6 +204,8 @@ bool matLine2D::get_intersection(
 //
 {
   _ASSERT(m_b_defined && a_ln.is_defined());
+  _ASSERT_NULL_POINTER(shp_point);
+
   if (is_parallel(a_ln)) {
     shp_point->X = 0;
     shp_point->Y = 0;

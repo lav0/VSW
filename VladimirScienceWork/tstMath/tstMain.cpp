@@ -200,6 +200,39 @@ bool run_segment(double a_d_x1, double a_d_y1, double a_d_x2, double a_d_y2)
 }
 
 //=============================================================================
+bool run_segment_intersection(
+  double a_d_x1_1, double a_d_y1_1, double a_d_x2_1, double a_d_y2_1,
+  double a_d_x1_2, double a_d_y1_2, double a_d_x2_2, double a_d_y2_2,
+  double a_d_check_x, double a_d_check_y, eIntersectionPlace a_e_check_place
+)
+//
+// lav 16/10/13 written.
+//
+{
+  matLine2DSegment sg1(
+    matPoint2DConstr(a_d_x1_1, a_d_y1_1),
+    matPoint2DConstr(a_d_x2_1, a_d_y2_1)
+  );
+  matLine2DSegment sg2(
+    matPoint2DConstr(a_d_x1_2, a_d_y1_2), 
+    matPoint2DConstr(a_d_x2_2, a_d_y2_2)
+  );
+
+  bool b_total_result = true;
+  
+  boost::shared_ptr<matPoint2D> shp_intr;
+  b_total_result &= 
+    a_e_check_place == sg1.recognize_intersection(sg2, shp_intr);
+
+  if (a_e_check_place != IP_NONE) {
+    b_total_result &= IS_ZERO(a_d_check_x - shp_intr->X) && 
+      IS_ZERO(a_d_check_y - shp_intr->Y);
+  }
+
+  return b_total_result;
+}
+
+//=============================================================================
 void show(bool a_b, char* a_c_info)
 //
 // lav 13/10/13 written.
@@ -313,6 +346,31 @@ int main()
       rand() % 20 - 10, rand() % 20 - 10, 
       rand() % 20 + 10, rand() % 20 + 10
     ), "[Segment testing]");
+  }
+
+  std::cout << std::endl;
+
+  { // Segment intersection testing 
+    show(run_segment_intersection(0,0,2,0, 0,1,1,1, DBL_MIN,DBL_MIN, IP_NONE),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(0,0,2,0, 1,-1,1,1, 1,0, IP_BOTH),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(-2,0,0,0, 1,-1,1,1, 1,0, IP_MIDDLE),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(-2,-1,0,0, 1,-1,1,1, 1,0.5, IP_MIDDLE),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(0,0,2,1, 1,2,3,0, 2,1, IP_MIDDLE),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(0,0,2,1, 4,2,3,0, 4,2, IP_EDGE),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(0,0,2,1, 5,1,4,2, 4,2, IP_EDGE),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(0,0,2,1, 6,3,4,2, 4,2, IP_FULL),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(6,3,4,2, 0,0,2,1, 2,1, IP_FULL),
+      "[Segment intersection testing]");
+    show(run_segment_intersection(6,3,4,2, 6,3,4.00000001,2, 6,3, IP_SAME),
+      "[Segment intersection testing]");
   }
 
   std::cout << std::endl << "Passed: " << s_passed <<

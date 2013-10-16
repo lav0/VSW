@@ -16,38 +16,6 @@ matLine2D(a_pn1, a_pn2)
 }
 
 //=============================================================================
-matLine2DSegment::matLine2DSegment(
-  matLine2D a_ln, 
-  double a_d_val1, 
-  double a_d_val2, 
-  bool a_b
-) 
-//
-// lav 15/10/13 written.
-//
-{
-  matPoint2D pn1, pn2;
-  if (a_b) {
-    pn1.X = a_d_val1;
-    pn2.X = a_d_val2;
-
-    set_defined(get_y_by_x(a_d_val1, pn1.Y));
-    set_defined(get_y_by_x(a_d_val2, pn2.Y));
-  } else {
-    pn1.Y = a_d_val1;
-    pn2.Y = a_d_val2;
-
-    set_defined(get_x_by_y(a_d_val1, pn1.X));
-    set_defined(get_x_by_y(a_d_val2, pn2.X));
-  }
-
-  m_shp_point1 = boost::shared_ptr<matPoint2D>(new matPoint2D(pn1));
-  m_shp_point2 = boost::shared_ptr<matPoint2D>(new matPoint2D(pn2));
-
-  define_pointers();
-}
-
-//=============================================================================
 matLine2DSegment::~matLine2DSegment()
 //
 // lav 15/10/13 written.
@@ -106,17 +74,63 @@ const boost::shared_ptr<matPoint2D> matLine2DSegment::get_pointer(
 }
 
 //=============================================================================
+matPoint2D matLine2DSegment::get_segment_point(
+  double a_d_lambda, 
+  bool b_leftright
+) const
+//
+// Inner method! Gives point from LEFT to RIGHT if (b_leftright)
+// otherwise point from  BOTTOM to TOP
+//
+///////////////////////////////////////////////////////////////////////////////
+//
+// lav 16/10/13 written.
+//
+{
+  _ASSERT(abs(a_d_lambda-0.5) <= 0.5);
+
+  matPoint2D pn;
+  ePointerPlace e_pp_first;
+  ePointerPlace e_pp_second;
+
+  if (b_leftright) {
+    e_pp_first = PP_LEFT;
+    e_pp_second = PP_RIGHT;
+  } else {
+    e_pp_first = PP_BOTTOM;
+    e_pp_second = PP_TOP;
+  }
+
+  pn.X = get_pointer(e_pp_first)->X * (1-a_d_lambda) + 
+    get_pointer(e_pp_second)->X * a_d_lambda;
+  pn.Y = get_pointer(e_pp_first)->Y * (1-a_d_lambda) + 
+    get_pointer(e_pp_second)->Y * a_d_lambda;
+
+  return pn;
+}
+
+//=============================================================================
 bool matLine2DSegment::is_point_within(const matPoint2D& a_pn) const
 //
 // lav 15/10/13 written.
 //
 {
-  return is_point_on(a_pn) ?
-    (a_pn.X >= get_pointer(PP_LEFT)->X && 
-    a_pn.X <= get_pointer(PP_RIGHT)->X) &&
-    (a_pn.Y >= get_pointer(PP_BOTTOM)->Y && 
-    a_pn.Y <= get_pointer(PP_TOP)->Y) :
-    false;
+  if (!is_point_on(a_pn)) {
+    return false;
+  }
+  
+  double d_lam = _POINTS_COMPARISON;
+
+  _ASSERT(!are_points_equal(*(get_pointer(PP_BOTTOM)), *(get_pointer(PP_TOP)), d_lam) ||
+    !are_points_equal(*(get_pointer(PP_LEFT)), *(get_pointer(PP_RIGHT)), d_lam));
+
+  double d_x_min = get_segment_point(d_lam, true).X;
+  double d_x_max = get_segment_point(1-d_lam, true).X;
+  double d_y_min = get_segment_point(d_lam, false).Y;
+  double d_y_max = get_segment_point(1-d_lam, false).Y;
+
+  return d_x_min <= a_pn.X && d_x_max >= a_pn.X &&
+    d_y_min <= a_pn.Y && d_y_max >= a_pn.Y;
 }
 
 //=============================================================================
@@ -172,20 +186,20 @@ const matVector2D matLine2DSegment::get_end_start_vector() const
 }
 
 //=============================================================================
-ePointOnEdgeResult matLine2DSegment::is_point_on_edge(const matPoint2D& a_pn) const
+matLine2DSegment::ePointOnEdgeResult matLine2DSegment::is_point_on_edge(
+  const matPoint2D& a_pn
+) const
 //
 // lav 15/10/13 written.
 //
 {
-  if (is_point_within(a_pn)) {
-
-    bool b_result = true;
-
-    if (are_points_equal(*m_shp_point1.get(), a_pn, _ZERO)) {
+  if (is_point_on(a_pn)) {
+    
+    if (are_points_equal(*m_shp_point1.get(), a_pn, _POINTS_COMPARISON)) {
 
       return POER_FIRST;
 
-    } else if (are_points_equal(*m_shp_point2.get(), a_pn, _ZERO)) {
+    } else if (are_points_equal(*m_shp_point2.get(), a_pn, _POINTS_COMPARISON)) {
 
       return POER_SECOND;
 
@@ -195,23 +209,45 @@ ePointOnEdgeResult matLine2DSegment::is_point_on_edge(const matPoint2D& a_pn) co
 }
 
 //=============================================================================
+bool matLine2DSegment::is_crossed(const matLine2DSegment& a_sg) const
+//
+// lav 16/10/13 written.
+//
+{
+  boost::shared_ptr<matPoint2D> shp_intr(new matPoint2D);
+  if (!get_intersection(a_sg, shp_intr)) {
+    return false;
+  }
+
+  bool b_x = get_pointer(PP_LEFT)->X <= shp_intr->X && 
+    get_pointer(PP_RIGHT)->X >= shp_intr->X && a_sg.get_pointer(PP_LEFT)->X <= shp_intr->X &&
+    a_sg.get_pointer(PP_RIGHT)->X >= shp_intr->X;
+
+  bool b_y = get_pointer(PP_BOTTOM)->Y <= shp_intr->Y && 
+    get_pointer(PP_TOP)->Y >= shp_intr->Y && a_sg.get_pointer(PP_BOTTOM)->Y <= shp_intr->Y &&
+    a_sg.get_pointer(PP_TOP)->Y >= shp_intr->Y;
+  
+  return b_x && b_y;
+}
+
+//=============================================================================
 eIntersectionPlace matLine2DSegment::recognize_intersection(
-  const matLine2DSegment& a_sg, boost::shared_ptr<matPoint2D> a_shp_output
+  const matLine2DSegment& a_sg, 
+  boost::shared_ptr<matPoint2D>& a_shp_output
 ) const
 //
 // lav 15/10/13 written.
+// lav 16/10/13 extended.
 //
 {
   _ASSERT(is_defined());
 
   if (!is_equal(a_sg)) {
     if (is_parallel(a_sg)) {
-      (*a_shp_output).X = 0;
-      (*a_shp_output).Y = 0;
       return IP_NONE;
     }
 
-    boost::shared_ptr<matPoint2D> shp_intr;
+    boost::shared_ptr<matPoint2D> shp_intr(new matPoint2D);
     if (get_intersection(a_sg, shp_intr)) {
       _ASSERT_NULL_POINTER(shp_intr);
     } else {
@@ -219,29 +255,43 @@ eIntersectionPlace matLine2DSegment::recognize_intersection(
       return IP_ERROR;
     }
 
-    if (!is_point_within(*shp_intr.get())) {
-      return IP_NONE;
-    } else {
-      if (is_point_on_edge(*shp_intr.get()) == ePointOnEdgeResult::POER_FIRST) {
-
-        a_shp_output = m_shp_point1;
-        return IP_EDGE;
-
-      } else if (is_point_on_edge(*shp_intr.get()) == ePointOnEdgeResult::POER_SECOND) {
-
-        a_shp_output = m_shp_point2;
-        return IP_EDGE;
-
-      } else {
-
-        a_shp_output = shp_intr;
-        return IP_MIDDLE;
+    if (a_sg.is_point_within(*shp_intr.get())) {
+      
+      a_shp_output = shp_intr;
+      if (is_point_within(*shp_intr.get())) {
+        return IP_BOTH;
       }
+      return IP_MIDDLE;
+
+    } else if (a_sg.is_point_on_edge(*shp_intr.get()) == ePointOnEdgeResult::POER_FIRST) {
+
+      a_shp_output = a_sg.m_shp_point1;
+      return IP_EDGE;
+
+    } else if (a_sg.is_point_on_edge(*shp_intr.get()) == ePointOnEdgeResult::POER_SECOND) {
+
+      a_shp_output = a_sg.m_shp_point2;
+      return IP_EDGE;
+
+    } else {
+      return IP_NONE;
     }
   }
 
-  // Pick any point on the segment
-  a_shp_output = m_shp_point1;
+  if (is_equal_segment(a_sg)) {
+    a_shp_output = m_shp_point1;
+    return IP_SAME;
+  }
+  
+  if (get_pointer(PP_RIGHT)->X < a_sg.get_pointer(PP_LEFT)->X){
+    a_shp_output = a_sg.get_pointer(PP_LEFT);
+  } else if (get_pointer(PP_LEFT)->X > a_sg.get_pointer(PP_RIGHT)->X){
+    a_shp_output = a_sg.get_pointer(PP_RIGHT);
+  } else {
+    _ASSERT(0);
+    return IP_ERROR;
+  }
+
   return IP_FULL;
 }
 
