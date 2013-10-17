@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vswMath", "vswMath\vswMath.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tstMath", "tstMath\tstMath.vcxproj", "{31E92767-4D2A-44F0-B56A-734293196C9A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vswGirder", "vswGirder\vswGirder.vcxproj", "{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{31E92767-4D2A-44F0-B56A-734293196C9A}.Debug|Win32.Build.0 = Debug|Win32
 		{31E92767-4D2A-44F0-B56A-734293196C9A}.Release|Win32.ActiveCfg = Release|Win32
 		{31E92767-4D2A-44F0-B56A-734293196C9A}.Release|Win32.Build.0 = Release|Win32
+		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}.Debug|Win32.Build.0 = Debug|Win32
+		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}.Release|Win32.ActiveCfg = Release|Win32
+		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

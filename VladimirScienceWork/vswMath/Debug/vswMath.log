@@ -1,5 +1,5 @@
-﻿Build started 17.10.2013 0:25:14.
-     1>Project "C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (rebuild target(s)).
+﻿Build started 17.10.2013 17:09:34.
+     1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\vswMath.lastbuildstate".
        InitializeBuildStatus:
@@ -10,22 +10,22 @@
          matVector2D.cpp
          matTriangle.cpp
          matLine2DSegment.cpp
-     1>c:\users\lucy\documents\github\vsw\vladimirsciencework\vswmath\matline2dsegment.cpp(266): warning C4482: nonstandard extension used: enum 'matLine2DSegment::ePointOnEdgeResult' used in qualified name
-     1>c:\users\lucy\documents\github\vsw\vladimirsciencework\vswmath\matline2dsegment.cpp(271): warning C4482: nonstandard extension used: enum 'matLine2DSegment::ePointOnEdgeResult' used in qualified name
+     1>c:\users\lav\documents\github\vsw\vladimirsciencework\vswmath\matline2dsegment.cpp(266): warning C4482: nonstandard extension used: enum 'matLine2DSegment::ePointOnEdgeResult' used in qualified name
+     1>c:\users\lav\documents\github\vsw\vladimirsciencework\vswmath\matline2dsegment.cpp(271): warning C4482: nonstandard extension used: enum 'matLine2DSegment::ePointOnEdgeResult' used in qualified name
          matLine2D.cpp
          Generating Code...
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib" /NOLOGO Debug\matLine2D.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib" /NOLOGO Debug\matLine2D.obj
          Debug\matLine2DSegment.obj
          Debug\matTriangle.obj
          Debug\matVector2D.obj
          Debug\matVector2DUnit.obj
-         vswMath.vcxproj -> C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib
+         vswMath.vcxproj -> C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib
        FinalizeBuildStatus:
          Deleting file "Debug\vswMath.unsuccessfulbuild".
          Touching "Debug\vswMath.lastbuildstate".
-     1>Done Building Project "C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:11.94
+Time Elapsed 00:00:02.08

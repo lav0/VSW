@@ -64,6 +64,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\vswGirder\vswGirder.vcxproj">
+      <Project>{6acf7f62-7ffb-4130-90c8-3d44f3fb2b86}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\vswMath\vswMath.vcxproj">
       <Project>{f0e98ca1-3486-41f6-b990-fc15b67f2af1}</Project>
     </ProjectReference>

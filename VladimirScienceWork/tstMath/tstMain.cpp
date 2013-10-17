@@ -3,6 +3,7 @@
 #include <cstdlib>
 
 #include "../vswMath/matTriangle.h"
+#include "../vswGirder/grdTriangle.h"
 
 #ifndef min
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
@@ -238,11 +239,18 @@ bool run_triangle()
 // lav 16/10/13 written.
 //
 {
-  matTriangle triangle(
-    matPoint2DConstr(2,2),
-    matPoint2DConstr(6,3),
-    matPoint2DConstr(1,7)
-  );
+  matPoint2D pn1 = matPoint2DConstr(2,2);
+  matPoint2D pn2 = matPoint2DConstr(6,3);
+  matPoint2D pn3 = matPoint2DConstr(1,7);
+  
+  matTriangle triangle(pn1,pn2,pn3);
+
+  grdTriangle grd(&pn1, &pn2, &pn3);
+  
+  matPoint2D* sop = grd.get_point(1);
+  pn1.X = 4040;
+
+
 
   return triangle.segment_test();
 }
