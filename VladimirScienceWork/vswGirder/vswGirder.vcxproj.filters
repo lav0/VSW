@@ -30,12 +30,18 @@
     <ClInclude Include="grdTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="grdRingStack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="grdTriangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="grdRingStack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

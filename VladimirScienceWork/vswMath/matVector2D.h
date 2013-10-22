@@ -12,6 +12,8 @@
 #define IS_ZERO(a) abs(a) < _ZERO
 
 struct matPoint2D {
+  matPoint2D(){}
+  matPoint2D(double a_x, double a_y) { X=a_x; Y=a_y; }
   double X;
   double Y;
 };
@@ -35,6 +37,10 @@ static bool are_points_equal(
 
   return b_xdif && b_ydif;
 }
+
+/*
+  CLASS DECLARATION ITSELF GOES FURTHER
+*/
 
 class matVector2D {
 

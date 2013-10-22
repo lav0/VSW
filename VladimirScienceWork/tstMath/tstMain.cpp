@@ -4,6 +4,7 @@
 
 #include "../vswMath/matTriangle.h"
 #include "../vswGirder/grdTriangle.h"
+#include "../vswGirder/grdRingStack.h"
 
 #ifndef min
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
@@ -239,21 +240,36 @@ bool run_triangle()
 // lav 16/10/13 written.
 //
 {
-  matPoint2D pn1 = matPoint2DConstr(2,2);
-  matPoint2D pn2 = matPoint2DConstr(6,3);
-  matPoint2D pn3 = matPoint2DConstr(1,7);
+  grdTriangle grd(
+    shared_ptr<matPoint2D>(new matPoint2D(2,2)), 
+    shared_ptr<matPoint2D>(new matPoint2D(6,3)), 
+    shared_ptr<matPoint2D>(new matPoint2D(1,7))
+  );
   
-  matTriangle triangle(pn1,pn2,pn3);
-
-  grdTriangle grd(&pn1, &pn2, &pn3);
-  
-  matPoint2D* sop = grd.get_point(1);
-  pn1.X = 4040;
-
-
-
-  return triangle.segment_test();
+  return true;
 }
+
+//=============================================================================
+bool run_stack_convex(
+  shared_ptr<matPoint2D> shp_p1,
+  shared_ptr<matPoint2D> shp_p2,
+  shared_ptr<matPoint2D> shp_p3,
+  shared_ptr<matPoint2D> shp_p4,
+  bool a_b_is_convex
+)
+//
+// lav 20/10/13 written.
+//
+{
+  grdRingStack stack;
+  stack.push_back(shp_p1);
+  stack.push_back(shp_p2);
+  stack.push_back(shp_p3);
+  stack.push_back(shp_p4);
+
+  return stack.is_convex() == a_b_is_convex;
+}
+
 
 //=============================================================================
 void show(bool a_b, char* a_c_info)
@@ -400,6 +416,47 @@ int main()
 
   { // Triangle testing
     show(run_triangle(), "[Triangle testing]");
+  }
+
+  std::cout << std::endl;
+
+  { // Stack testing
+    show(run_stack_convex(
+      shared_ptr<matPoint2D>(new matPoint2D(2,2)),
+      shared_ptr<matPoint2D>(new matPoint2D(6,3)),
+      shared_ptr<matPoint2D>(new matPoint2D(7,8)),
+      shared_ptr<matPoint2D>(new matPoint2D(2,6)),
+      true
+    ), "[Stack testing]");
+    show(run_stack_convex(
+      shared_ptr<matPoint2D>(new matPoint2D(2,2)),
+      shared_ptr<matPoint2D>(new matPoint2D(0,0)),
+      shared_ptr<matPoint2D>(new matPoint2D(1,1)),
+      shared_ptr<matPoint2D>(new matPoint2D(3,3)),
+      true
+    ), "[Stack testing]");
+    show(run_stack_convex(
+      shared_ptr<matPoint2D>(new matPoint2D(2,2)),
+      shared_ptr<matPoint2D>(new matPoint2D(0,0)),
+      shared_ptr<matPoint2D>(new matPoint2D(0,0)),
+      shared_ptr<matPoint2D>(new matPoint2D(3,3)),
+      true
+    ), "[Stack testing]");
+    show(run_stack_convex(
+      shared_ptr<matPoint2D>(new matPoint2D(2,2)),
+      shared_ptr<matPoint2D>(new matPoint2D(6,2)),
+      shared_ptr<matPoint2D>(new matPoint2D(6,8)),
+      shared_ptr<matPoint2D>(new matPoint2D(4,3)),
+      false
+    ), "[Stack testing]");
+    show(run_stack_convex(
+      shared_ptr<matPoint2D>(new matPoint2D(1,1)),
+      shared_ptr<matPoint2D>(new matPoint2D(5,2)),
+      shared_ptr<matPoint2D>(new matPoint2D(-1,3)),
+      shared_ptr<matPoint2D>(new matPoint2D(1,-2)),
+      false
+    ), "[Stack testing]");
+    
   }
 
   std::cout << std::endl << "Passed: " << s_passed <<

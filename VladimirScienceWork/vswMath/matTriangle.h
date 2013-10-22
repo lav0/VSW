@@ -2,6 +2,7 @@
 
 #include "matLine2DSegment.h"
 
+
 class matTriangle
 {
 public: /* CONSTRUCTORS */

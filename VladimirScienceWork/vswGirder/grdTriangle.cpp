@@ -7,32 +7,40 @@ grdTriangle::grdTriangle(
   shared_ptr<matPoint2D> a_shp1,
   shared_ptr<matPoint2D> a_shp2,
   shared_ptr<matPoint2D> a_shp3
-)
+) :
+m_points()
 //
 // lav 17/10/13 written.
+// lav 22/10/13 used grdRingStack.
 //
 {
-  m_shp_pn1 = a_shp1;
-  m_shp_pn2 = a_shp2;
-  m_shp_pn3 = a_shp3;
+  m_points.push_back(a_shp1);
+  m_points.push_back(a_shp2);
+  m_points.push_back(a_shp3);
 }
 
 //=============================================================================
-matPoint2D* grdTriangle::get_point(int a_i) const
+const matPoint2D* grdTriangle::get_point(int a_i) const
 //
 // lav 17/10/13 written.
 //
 {
-  if (a_i == 1) {
-    return m_p1;
-  } else if (a_i == 2) {
-    return m_shp_pn2.get();
-  } else if (a_i == 3) {
-    return m_shp_pn3.get();
+  return get_shp_point(a_i).get();
+}
+
+//=============================================================================
+shared_ptr<matPoint2D> grdTriangle::get_shp_point(int a_i) const
+//
+// lav 17/10/13 written.
+// lav 22/10/13 used grdRingStack.
+//
+{
+  if (a_i >= 0 && a_i <= 2) {
+    return m_points.get_point_by_ind(a_i);
   } 
 
   _ASSERT(0);
-  return shared_ptr<matPoint2D>(NULL).get();
+  return shared_ptr<matPoint2D>(NULL);
 }
 
 //=============================================================================
