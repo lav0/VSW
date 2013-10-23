@@ -1,31 +1,29 @@
-﻿Build started 22.10.2013 23:06:45.
-     1>Project "C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (rebuild target(s)).
+﻿Build started 23.10.2013 18:25:16.
+     1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (Rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\vswMath.lastbuildstate".
        InitializeBuildStatus:
          Creating "Debug\vswMath.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Boost\boost_1_54_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt matLine2D.cpp matLine2DSegment.cpp matTriangle.cpp matVector2D.cpp matVector2DUnit.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Boost\boost_1_54_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt matLine2D.cpp matLine2DSegment.cpp matTriangle.cpp matVector2D.cpp matVector2DUnit.cpp
          matVector2DUnit.cpp
          matVector2D.cpp
          matTriangle.cpp
          matLine2DSegment.cpp
-     1>c:\users\lucy\documents\github\vsw\vladimirsciencework\vswmath\matline2dsegment.cpp(266): warning C4482: nonstandard extension used: enum 'matLine2DSegment::ePointOnEdgeResult' used in qualified name
-     1>c:\users\lucy\documents\github\vsw\vladimirsciencework\vswmath\matline2dsegment.cpp(271): warning C4482: nonstandard extension used: enum 'matLine2DSegment::ePointOnEdgeResult' used in qualified name
          matLine2D.cpp
          Generating Code...
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib" /NOLOGO Debug\matLine2D.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib" /NOLOGO Debug\matLine2D.obj
          Debug\matLine2DSegment.obj
          Debug\matTriangle.obj
          Debug\matVector2D.obj
          Debug\matVector2DUnit.obj
-         vswMath.vcxproj -> C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib
+         vswMath.vcxproj -> C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib
        FinalizeBuildStatus:
          Deleting file "Debug\vswMath.unsuccessfulbuild".
          Touching "Debug\vswMath.lastbuildstate".
-     1>Done Building Project "C:\Users\lucy\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:11.17
+Time Elapsed 00:00:01.69

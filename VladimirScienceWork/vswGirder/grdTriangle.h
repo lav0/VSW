@@ -16,24 +16,35 @@ public:
     shared_ptr<matPoint2D>
   );
 
+private: /* INNER METHODS*/
+  
+  double semi_perimeter() const;
+
+  matVector2D vector12() const;
+  matVector2D vector23() const;
+  matVector2D vector31() const;
+
+  matLine2DSegment median(int a_ind) const;
+
 public:
 
-  double weight() const {return 0;}
+  double weight() const;
 
-  matPoint2D gravity_center() const {return *m_points.get_point_by_ind(0); }
+  matPoint2D gravity_centre() const;
 
 public:
 
-  bool is_value() const;
+  bool is_valid() const;
   
 public:
 
   const matPoint2D* get_point(int) const;
+
   shared_ptr<matPoint2D> get_shp_point(int) const;
 
 private:
   
   grdRingStack m_points;
-
+  
 };
 

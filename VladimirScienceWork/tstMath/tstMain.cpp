@@ -3,8 +3,10 @@
 #include <cstdlib>
 
 #include "../vswMath/matTriangle.h"
-#include "../vswGirder/grdTriangle.h"
+#include "../vswGirder/grdFigure.h"
 #include "../vswGirder/grdRingStack.h"
+
+#define pPoint shared_ptr<matPoint2D>
 
 #ifndef min
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
@@ -246,15 +248,42 @@ bool run_triangle()
     shared_ptr<matPoint2D>(new matPoint2D(1,7))
   );
   
-  return true;
+  grdTriangle grd1(
+    shared_ptr<matPoint2D>(new matPoint2D(12,2)), 
+    shared_ptr<matPoint2D>(new matPoint2D(-18,-3)), 
+    shared_ptr<matPoint2D>(new matPoint2D(0,0))
+  );
+
+  double d_weight = grd.weight();
+
+  return grd.is_valid() && !grd1.is_valid() &&
+    IS_ZERO(d_weight - 10.5);
+}
+
+//=============================================================================
+bool run_triangle_gravity_centre()
+//
+// lav 23/10/13 written.
+//
+{
+  grdTriangle grd(
+    shared_ptr<matPoint2D>(new matPoint2D(1,1)), 
+    shared_ptr<matPoint2D>(new matPoint2D(3,0)), 
+    shared_ptr<matPoint2D>(new matPoint2D(2,28))
+  );
+
+  matPoint2D pn_gc1 = grd.gravity_centre();
+  
+  return IS_ZERO(pn_gc1.X - 2.0) && IS_ZERO(pn_gc1.Y - 9.6666666670999994);
+  
 }
 
 //=============================================================================
 bool run_stack_convex(
-  shared_ptr<matPoint2D> shp_p1,
-  shared_ptr<matPoint2D> shp_p2,
-  shared_ptr<matPoint2D> shp_p3,
-  shared_ptr<matPoint2D> shp_p4,
+  pPoint shp_p1,
+  pPoint shp_p2,
+  pPoint shp_p3,
+  pPoint shp_p4,
   bool a_b_is_convex
 )
 //
@@ -270,6 +299,48 @@ bool run_stack_convex(
   return stack.is_convex() == a_b_is_convex;
 }
 
+//=============================================================================
+bool run_convex_figure_triangulation()
+//
+// 23/10/13 lav written.
+//
+{
+  grdFigure figure;
+
+  figure.push_back(pPoint(new matPoint2D(-3, -2)));
+  figure.push_back(pPoint(new matPoint2D(-1, -4)));
+  figure.push_back(pPoint(new matPoint2D(3, -3)));
+  figure.push_back(pPoint(new matPoint2D(4, -1)));
+  figure.push_back(pPoint(new matPoint2D(2, 4)));
+  figure.push_back(pPoint(new matPoint2D(0, 4)));
+  figure.push_back(pPoint(new matPoint2D(-4, 2)));
+
+  std::vector<grdTriangle> triangle_list_result;
+
+  if (figure.triangulate(triangle_list_result) != -1) {
+
+    grdTriangle* triangle0 = &triangle_list_result[0];
+    grdTriangle* triangle1 = &triangle_list_result[1];
+
+    bool b_total_result = triangle1->is_valid();
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(0)->X + 3);
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(0)->Y + 2);
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->X + 1);
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->Y + 4);
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(2)->X - 3);
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(2)->Y + 3);
+    b_total_result &= IS_ZERO(triangle1->get_shp_point(0)->X + 3);
+    b_total_result &= IS_ZERO(triangle1->get_shp_point(0)->Y + 2);
+    b_total_result &= IS_ZERO(triangle1->get_shp_point(1)->X - 3);
+    b_total_result &= IS_ZERO(triangle1->get_shp_point(1)->Y + 3);
+    b_total_result &= IS_ZERO(triangle1->get_shp_point(2)->X - 4);
+    b_total_result &= IS_ZERO(triangle1->get_shp_point(2)->Y + 1);
+
+    return b_total_result;
+  }
+
+  return false;
+}
 
 //=============================================================================
 void show(bool a_b, char* a_c_info)
@@ -457,6 +528,18 @@ int main()
       false
     ), "[Stack testing]");
     
+  }
+
+  std::cout << std::endl;
+
+  { // Triangle gravity centre testing
+    show(run_triangle_gravity_centre(), "[Triangle gravity centre testing]");
+  }
+
+  std::cout << std::endl;
+
+  { // Convex figure triangulation testing
+    show(run_convex_figure_triangulation(), "[Convex figure triangulation testing]");
   }
 
   std::cout << std::endl << "Passed: " << s_passed <<

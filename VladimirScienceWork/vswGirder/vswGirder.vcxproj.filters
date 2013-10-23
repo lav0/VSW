@@ -33,6 +33,9 @@
     <ClInclude Include="grdRingStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="grdFigure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="grdRingStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="grdFigure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -20,7 +20,7 @@ void grdRingStack::push_back(boost::shared_ptr<matPoint2D>& a_shp_point)
 }
 
 //=============================================================================
-int grdRingStack::get_size() const
+size_t grdRingStack::get_size() const
 //
 // lav 20/10/13 written.
 //
@@ -34,7 +34,7 @@ boost::shared_ptr<matPoint2D> grdRingStack::get_point_by_ind(int a_ind) const
 // lav 20/10/13 written.
 //
 {
-  _ASSERT(a_ind >= get_size());
+  _ASSERT(a_ind < get_size());
 
   return m_stack[a_ind];
 }
@@ -71,7 +71,7 @@ bool grdRingStack::is_convex() const
     *(*itr_end).get(),
     *(*(++itr_third)).get()
   );
-  //++itr_start;
+  
   for (itr_start; itr_start!= m_stack.end(); ++itr_start) {
 
     if (++itr_third == m_stack.end()) {

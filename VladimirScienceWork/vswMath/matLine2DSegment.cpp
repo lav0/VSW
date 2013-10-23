@@ -24,6 +24,21 @@ matLine2DSegment::~matLine2DSegment()
 }
 
 //=============================================================================
+bool matLine2DSegment::assign(matPoint2D a_pn1, matPoint2D a_pn2)
+//
+// lav 23/10/13 written.
+//
+{
+  if (!define_by_two_points(a_pn1, a_pn2)) {
+    return false;
+  }
+
+  define_pointers();
+
+  return true;
+}
+
+//=============================================================================
 void matLine2DSegment::define_pointers()
 //
 // lav 15/10/13 written.
@@ -105,6 +120,22 @@ matPoint2D matLine2DSegment::get_segment_point(
     get_pointer(e_pp_second)->X * a_d_lambda;
   pn.Y = get_pointer(e_pp_first)->Y * (1-a_d_lambda) + 
     get_pointer(e_pp_second)->Y * a_d_lambda;
+
+  return pn;
+}
+
+//=============================================================================
+const matPoint2D matLine2DSegment::get_point_by_lambda(double a_d_lam) const
+//
+// lav 23/10/13 written.
+//
+{
+  _ASSERT(abs(a_d_lam-0.5) <= 0.5);
+
+  matPoint2D pn;
+
+  pn.X = m_shp_point1->X * (1-a_d_lam) + m_shp_point2->X * a_d_lam;
+  pn.Y = m_shp_point1->Y * (1-a_d_lam) + m_shp_point2->Y * a_d_lam;
 
   return pn;
 }

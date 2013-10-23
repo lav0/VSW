@@ -28,13 +28,16 @@ public: /* MAIN METHODS */
 
   bool is_convex() const;
 
-  int get_size() const;
+  size_t get_size() const;
 
 public: /* ACCESSORS */
 
   void push_back(boost::shared_ptr<matPoint2D>&);
   
   boost::shared_ptr<matPoint2D> get_point_by_ind(int) const;
+  
+  VectorPoints::const_iterator get_stack_begin() const { return m_stack.begin(); }
+  VectorPoints::const_iterator get_stack_end() const { return m_stack.end(); }
 
 private: /* MEMBERS */ 
 
