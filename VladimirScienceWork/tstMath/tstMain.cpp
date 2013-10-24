@@ -1,6 +1,11 @@
 #include <iostream>
 #include <conio.h>
 #include <cstdlib>
+#include <string>
+#include <fstream>
+
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "../vswMath/matTriangle.h"
 #include "../vswGirder/grdFigure.h"
@@ -303,18 +308,35 @@ bool run_stack_convex(
 bool run_convex_figure_triangulation()
 //
 // 23/10/13 lav written.
+// 24/10/13 lav weight added.
 //
 {
   grdFigure figure;
 
-  figure.push_back(pPoint(new matPoint2D(-3, -2)));
-  figure.push_back(pPoint(new matPoint2D(-1, -4)));
-  figure.push_back(pPoint(new matPoint2D(3, -3)));
-  figure.push_back(pPoint(new matPoint2D(4, -1)));
-  figure.push_back(pPoint(new matPoint2D(2, 4)));
-  figure.push_back(pPoint(new matPoint2D(0, 4)));
-  figure.push_back(pPoint(new matPoint2D(-4, 2)));
-
+  std::string str_line;
+  std::ifstream file("file0.txt");
+  if (file.is_open()) {
+    std::vector<std::string> str_array;
+    while (std::getline(file, str_line)) {
+      boost::split(str_array, str_line, boost::is_any_of(","));
+      figure.push_back(pPoint(new matPoint2D(
+        boost::lexical_cast<double>(*str_array.begin()),
+        boost::lexical_cast<double>(*(++str_array.begin()))
+      )));
+    }
+    
+  }
+  
+  Girder girder;
+  if (figure.calculate_gravity_centre_and_weight(girder)) {
+    if (IS_ZERO(girder.m_weight - 49.5) == false || 
+      IS_ZERO(girder.m_gravity_centre.X - 0.218855219) == false || 
+      IS_ZERO(girder.m_gravity_centre.Y + 0.1043771) == false) {
+      return false;
+    }
+    
+  }
+  
   std::vector<grdTriangle> triangle_list_result;
 
   if (figure.triangulate(triangle_list_result) != -1) {
@@ -325,8 +347,8 @@ bool run_convex_figure_triangulation()
     bool b_total_result = triangle1->is_valid();
     b_total_result &= IS_ZERO(triangle0->get_shp_point(0)->X + 3);
     b_total_result &= IS_ZERO(triangle0->get_shp_point(0)->Y + 2);
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->X + 1);
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->Y + 4);
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->X);
+    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->Y + 5);
     b_total_result &= IS_ZERO(triangle0->get_shp_point(2)->X - 3);
     b_total_result &= IS_ZERO(triangle0->get_shp_point(2)->Y + 3);
     b_total_result &= IS_ZERO(triangle1->get_shp_point(0)->X + 3);
@@ -336,7 +358,9 @@ bool run_convex_figure_triangulation()
     b_total_result &= IS_ZERO(triangle1->get_shp_point(2)->X - 4);
     b_total_result &= IS_ZERO(triangle1->get_shp_point(2)->Y + 1);
 
-    return b_total_result;
+    b_total_result &= IS_ZERO(figure.weight() -49.5);
+
+    return b_total_result && triangle0->is_valid() && triangle1->is_valid();
   }
 
   return false;

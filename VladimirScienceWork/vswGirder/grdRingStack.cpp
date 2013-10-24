@@ -34,7 +34,7 @@ boost::shared_ptr<matPoint2D> grdRingStack::get_point_by_ind(int a_ind) const
 // lav 20/10/13 written.
 //
 {
-  _ASSERT(a_ind < get_size());
+  _ASSERT(a_ind < (int) get_size());
 
   return m_stack[a_ind];
 }

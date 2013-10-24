@@ -167,3 +167,15 @@ matPoint2D grdTriangle::gravity_centre() const
 }
 
 //=============================================================================
+bool grdTriangle::calculate_gravity_centre_and_weight(Girder& a_result)
+//
+// lav 24/10/13 written.
+//
+{
+  a_result.m_gravity_centre = gravity_centre();
+  a_result.m_weight = weight();
+
+  return a_result.m_weight > _ZERO;
+}
+
+//=============================================================================

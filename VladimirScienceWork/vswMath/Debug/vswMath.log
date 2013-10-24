@@ -1,4 +1,4 @@
-﻿Build started 23.10.2013 18:25:16.
+﻿Build started 24.10.2013 16:41:10.
      1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (Rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\vswMath.lastbuildstate".
@@ -26,4 +26,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.69
+Time Elapsed 00:00:01.66

@@ -28,10 +28,12 @@ private: /* INNER METHODS*/
 
 public:
 
+  bool calculate_gravity_centre_and_weight(Girder&);
+
   double weight() const;
 
   matPoint2D gravity_centre() const;
-
+  
 public:
 
   bool is_valid() const;
