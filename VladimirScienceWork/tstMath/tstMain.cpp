@@ -259,7 +259,8 @@ bool run_triangle()
     shared_ptr<matPoint2D>(new matPoint2D(0,0))
   );
 
-  double d_weight = grd.weight();
+  double d_weight;
+  grd.weight(d_weight);
 
   return grd.is_valid() && !grd1.is_valid() &&
     IS_ZERO(d_weight - 10.5);
@@ -277,7 +278,8 @@ bool run_triangle_gravity_centre()
     shared_ptr<matPoint2D>(new matPoint2D(2,28))
   );
 
-  matPoint2D pn_gc1 = grd.gravity_centre();
+  matPoint2D pn_gc1;
+  grd.gravity_centre(pn_gc1);
   
   return IS_ZERO(pn_gc1.X - 2.0) && IS_ZERO(pn_gc1.Y - 9.6666666670999994);
   
@@ -301,20 +303,23 @@ bool run_stack_convex(
   stack.push_back(shp_p3);
   stack.push_back(shp_p4);
 
-  return stack.is_convex() == a_b_is_convex;
+  return a_b_is_convex ? stack.is_convex() >= 1 : stack.is_convex() <= 0;
 }
 
 //=============================================================================
-bool run_convex_figure_triangulation()
+bool run_convex_figure_gravity_centre_and_weight(
+  std::string a_file_name,
+  double a_check_weight, double a_check_gc_x, double a_check_gc_y)
 //
-// 23/10/13 lav written.
-// 24/10/13 lav weight added.
+// lav 23/10/13 written.
+// lav 24/10/13 weight added.
+// lav 25/10/13 rewritten. renamed.
 //
 {
   grdFigure figure;
 
   std::string str_line;
-  std::ifstream file("file0.txt");
+  std::ifstream file(a_file_name);
   if (file.is_open()) {
     std::vector<std::string> str_array;
     while (std::getline(file, str_line)) {
@@ -324,45 +329,18 @@ bool run_convex_figure_triangulation()
         boost::lexical_cast<double>(*(++str_array.begin()))
       )));
     }
-    
   }
-  
+  bool b_total_result = true;
   Girder girder;
   if (figure.calculate_gravity_centre_and_weight(girder)) {
-    if (IS_ZERO(girder.m_weight - 49.5) == false || 
-      IS_ZERO(girder.m_gravity_centre.X - 0.218855219) == false || 
-      IS_ZERO(girder.m_gravity_centre.Y + 0.1043771) == false) {
-      return false;
-    }
     
+    b_total_result &= IS_ZERO(girder.m_weight - a_check_weight);
+    b_total_result &= IS_ZERO(girder.m_gravity_centre.X - a_check_gc_x);
+    b_total_result &= IS_ZERO(girder.m_gravity_centre.Y - a_check_gc_y);
+    
+    return b_total_result;
   }
   
-  std::vector<grdTriangle> triangle_list_result;
-
-  if (figure.triangulate(triangle_list_result) != -1) {
-
-    grdTriangle* triangle0 = &triangle_list_result[0];
-    grdTriangle* triangle1 = &triangle_list_result[1];
-
-    bool b_total_result = triangle1->is_valid();
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(0)->X + 3);
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(0)->Y + 2);
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->X);
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(1)->Y + 5);
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(2)->X - 3);
-    b_total_result &= IS_ZERO(triangle0->get_shp_point(2)->Y + 3);
-    b_total_result &= IS_ZERO(triangle1->get_shp_point(0)->X + 3);
-    b_total_result &= IS_ZERO(triangle1->get_shp_point(0)->Y + 2);
-    b_total_result &= IS_ZERO(triangle1->get_shp_point(1)->X - 3);
-    b_total_result &= IS_ZERO(triangle1->get_shp_point(1)->Y + 3);
-    b_total_result &= IS_ZERO(triangle1->get_shp_point(2)->X - 4);
-    b_total_result &= IS_ZERO(triangle1->get_shp_point(2)->Y + 1);
-
-    b_total_result &= IS_ZERO(figure.weight() -49.5);
-
-    return b_total_result && triangle0->is_valid() && triangle1->is_valid();
-  }
-
   return false;
 }
 
@@ -562,8 +540,39 @@ int main()
 
   std::cout << std::endl;
 
-  { // Convex figure triangulation testing
-    show(run_convex_figure_triangulation(), "[Convex figure triangulation testing]");
+  { // Convex figure gravity centre and weight calculation testing
+    show(
+      run_convex_figure_gravity_centre_and_weight("file0.txt", 49.5, 0.218855219,-0.1043771),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file1.txt", 16, 1, 1),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file2.txt", 14, 1, 1),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file3.txt", 809.4984,-6.911066314, 11.990353083123319),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file4.txt", 809.4984,-6.911066314, 11.990353083123319),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file5.txt", 0.0,-0.5, 3.0),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file6.txt", 0, 5, 9),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file7.txt", 0, 2.5, 3.25),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
   }
 
   std::cout << std::endl << "Passed: " << s_passed <<

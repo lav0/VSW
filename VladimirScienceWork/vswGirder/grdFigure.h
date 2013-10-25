@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "grdTriangle.h"
+#include "grdSingularFigure.h"
 
 using namespace boost;
 
@@ -12,19 +13,17 @@ public: /* CONSTRUCTORS */
 
 private: /* INNER */
 
+  bool singular_to_member();
   int triangulate_to_member();
+  
 
 public: /* MAIN FUNCTIONS */
 
   bool calculate_gravity_centre_and_weight(Girder&);
 
-  double weight() const;
-
-  matPoint2D gravity_centre() const { return *m_points.get_point_by_ind(0); }
-  
   void push_back(shared_ptr<matPoint2D>&);
 
-  bool check_for_convexity() const;
+  eConvexityCase check_for_convexity() const;
 
   int get_size() const;
   int triangulate(std::vector<grdTriangle>&) const;

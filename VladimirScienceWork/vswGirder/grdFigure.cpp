@@ -29,7 +29,7 @@ int grdFigure::get_size() const
 }
 
 //=============================================================================
-bool grdFigure::check_for_convexity() const
+eConvexityCase grdFigure::check_for_convexity() const
 //
 // lav 23/10/13 written.
 //
@@ -49,23 +49,21 @@ const std::vector<shared_ptr<IGirder>>& grdFigure::get_sub_list() const
 }
 
 //=============================================================================
-double grdFigure::weight() const 
+bool grdFigure::singular_to_member()
 //
-// lav 24/10/13 written.
+// lav 25/10/13 written.
 //
 {
-  std::vector<grdTriangle> subfigure_array;
-  if (triangulate(subfigure_array) == -1) {
-    return 0;
-  }
-  
-  double d_total_sum = 0;
-  std::vector<grdTriangle>::const_iterator itr = subfigure_array.begin();
-  do  {
-    d_total_sum += itr->weight();
-  } while (++itr!= subfigure_array.end());
+  shared_ptr<grdSingularFigure> shp_singular_figure(
+    new grdSingularFigure(m_points)
+  );
 
-  return d_total_sum;
+  if (shp_singular_figure->is_valid()) {
+    m_subfig_list.push_back(shp_singular_figure);
+    return true;
+  }
+
+  return false;
 }
 
 //=============================================================================
@@ -97,7 +95,7 @@ int grdFigure::triangulate(
 // lav 23/10/13 written.
 //
 {
-  if (!check_for_convexity() || get_size() < 3) {
+  if (check_for_convexity() != CC_CONVEX) {
     // Cannot triangulate yet.
     return -1;
   }
@@ -124,20 +122,36 @@ int grdFigure::triangulate(
 }
 
 //=============================================================================
+bool handle_all_limits_point_case()
+//
+// lav 25/10/13 written.
+//
+{
+  return true;
+}
+
+//=============================================================================
 bool grdFigure::calculate_gravity_centre_and_weight(Girder& a_result)
 //
 // lav 24/10/13 written.
+// lav 25/10/13 extended.
 //
 {
-  if (check_for_convexity()) {
-    triangulate_to_member();
-    return average(m_subfig_list, a_result);
+  eConvexityCase e_convexity = check_for_convexity();
+  if (e_convexity == CC_CONVEX) {
+    int i_triangle_num = triangulate_to_member();
+
+    _ASSERT(i_triangle_num != -1);
+  } else if (e_convexity == CC_LIMIT_POINTS_ONLY) {
+    bool b_singular_pushed = singular_to_member();
+
+    _ASSERT(b_singular_pushed);
   } else {
-    _ASSERT(0);
+    _ASSERT(e_convexity == CC_NOT_CONVEX);
     // not supported yet
   }
 
-  return false;
+  return average(m_subfig_list, a_result);
 }
 
 //=============================================================================

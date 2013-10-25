@@ -1,4 +1,4 @@
-﻿Build started 24.10.2013 16:45:42.
+﻿Build started 25.10.2013 15:52:35.
      1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\tstMath.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -27,7 +27,7 @@
                      IteratorT=const char *,
                      RangeT=boost::iterator_range<const char *>
                  ]
-                 c:\users\lav\documents\github\vsw\vladimirsciencework\tstmath\tstmain.cpp(321) : see reference to function template instantiation 'boost::algorithm::detail::is_any_ofF<CharT> boost::algorithm::is_any_of<const char[2]>(RangeT (&))' being compiled
+                 c:\users\lav\documents\github\vsw\vladimirsciencework\tstmath\tstmain.cpp(326) : see reference to function template instantiation 'boost::algorithm::detail::is_any_ofF<CharT> boost::algorithm::is_any_of<const char[2]>(RangeT (&))' being compiled
                  with
                  [
                      CharT=char,
@@ -45,4 +45,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.91
+Time Elapsed 00:00:02.86

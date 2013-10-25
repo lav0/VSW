@@ -24,6 +24,10 @@ struct IGirder
 //=============================================================================
 static bool average(std::vector<shared_ptr<IGirder>> a_list, Girder& a_result)
 //
+// Find weight and centre of the whole income list
+//
+///////////////////////////////////////////////////////////////////////////////
+//
 // lav 24/10/13 written.
 //
 {
@@ -43,23 +47,25 @@ static bool average(std::vector<shared_ptr<IGirder>> a_list, Girder& a_result)
     d_total_weight += girders_list[i_index].m_weight;
     ++itr;
   }
-  _ASSERT(IS_ZERO(d_total_weight) == false);
+  _ASSERT(IS_ZERO(d_total_weight) == (a_list.size() == 1));
+
+  if (a_list.size() == 1) {
+    a_result = girders_list[0];
+    return true;
+  }
 
   const double d_inverse_total_weight = 1 / d_total_weight;  
   Girder result;
   result.m_weight = d_total_weight;
   result.m_gravity_centre = matPoint2D(0,0);
-  itr = a_list.end();
   do {
-    --itr;
     --i_index;
     result.m_gravity_centre.X += d_inverse_total_weight *
       girders_list[i_index].m_weight * girders_list[i_index].m_gravity_centre.X;
     result.m_gravity_centre.Y += d_inverse_total_weight *
       girders_list[i_index].m_weight * girders_list[i_index].m_gravity_centre.Y;
-  } while (itr != a_list.begin());
+  } while (i_index > 0);
 
   a_result = result;
-  
   return true;
 }

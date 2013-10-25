@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClInclude Include="grdFigure.h" />
     <ClInclude Include="grdRingStack.h" />
+    <ClInclude Include="grdSingularFigure.h" />
     <ClInclude Include="grdTriangle.h" />
     <ClInclude Include="IGirder.h" />
     <ClInclude Include="stdafx.h" />
@@ -84,6 +85,7 @@
   <ItemGroup>
     <ClCompile Include="grdFigure.cpp" />
     <ClCompile Include="grdRingStack.cpp" />
+    <ClCompile Include="grdSingularFigure.cpp" />
     <ClCompile Include="grdTriangle.cpp" />
     <ClCompile Include="IGirder.cpp" />
     <ClCompile Include="stdafx.cpp">

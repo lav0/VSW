@@ -8,6 +8,20 @@
 
 typedef std::vector<boost::shared_ptr<matPoint2D>> VectorPoints;
 
+enum eVectorsTurn{
+  VT_ERROR = -1,
+  VT_NONE = 0,
+  VT_LEFT = 1,
+  VT_RIGHT = 2
+};
+
+enum eConvexityCase {
+  CC_ERROR = -1,
+  CC_NOT_CONVEX = 0,
+  CC_LIMIT_POINTS_ONLY = 1,
+  CC_CONVEX = 2
+};
+
 class grdRingStack
 {
 
@@ -18,15 +32,15 @@ public: /* CONSTRUCTORS */
 
 private: /* INNER METHODS */
 
-  bool is_right_turn(
+  eVectorsTurn determine_turn(
     const matPoint2D&,
     const matPoint2D&,
     const matPoint2D&
   ) const;
-
+  
 public: /* MAIN METHODS */
 
-  bool is_convex() const;
+  eConvexityCase is_convex() const;
 
   size_t get_size() const;
 

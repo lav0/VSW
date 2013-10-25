@@ -135,47 +135,54 @@ matLine2DSegment grdTriangle::median(int a_ind) const
 }
 
 //=============================================================================
-double grdTriangle::weight() const 
+bool grdTriangle::weight(double& a_d_out) const 
 //
 // Here, weight's meaning equal is a area of the figure
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
 // lav 23/10/13 written.
+// lav 25/10/13 return type made bool. output goes by ref
 //
 {
-  return is_valid() ? sqrt(
+  if (!is_valid()) {
+    return false;
+  }
+
+  a_d_out =  sqrt(
     semi_perimeter() * (
       semi_perimeter() - vector12().get_norm()) * (
       semi_perimeter() - vector23().get_norm()) * (
       semi_perimeter() - vector31().get_norm()
-    )) :
-    0;
+    )
+  );
+  return a_d_out > _ZERO;
 }
 
 //=============================================================================
-matPoint2D grdTriangle::gravity_centre() const 
+bool grdTriangle::gravity_centre(matPoint2D& a_vc_out) const 
 //
 // lav 23/10/13 written.
+// lav 25/10/13 return type made bool. output goes by ref
 //
 {
-  _ASSERT(is_valid());
+  if (!is_valid()) {
+    return false;
+  }
 
-  return is_valid() ? 
-    median(0).get_point_by_lambda(0.6666666667) : 
-    matPoint2D();
+  a_vc_out = median(0).get_point_by_lambda(0.6666666667);
+  return true;
 }
 
 //=============================================================================
 bool grdTriangle::calculate_gravity_centre_and_weight(Girder& a_result)
 //
 // lav 24/10/13 written.
+// lav 25/10/13 rewritten.
 //
 {
-  a_result.m_gravity_centre = gravity_centre();
-  a_result.m_weight = weight();
-
-  return a_result.m_weight > _ZERO;
+  return weight(a_result.m_weight) &&
+    gravity_centre(a_result.m_gravity_centre);
 }
 
 //=============================================================================
