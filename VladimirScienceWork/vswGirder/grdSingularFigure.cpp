@@ -17,7 +17,7 @@ bool grdSingularFigure::is_valid() const
 // lav 25/10/13 written.
 //
 {
-  return m_points.is_convex() == CC_LIMIT_POINTS_ONLY &&
+  return m_points.is_convex() == CC_BORDER_POINTS_ONLY &&
      m_points.get_size() > 0;
 }
 

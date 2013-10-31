@@ -206,4 +206,13 @@ const matVector2D matVector2D::operator-(const matVector2D& a_vc2) const
 {
   return matVector2D(m_x - a_vc2.m_x, m_y - a_vc2.m_y);
 }
+
+//=============================================================================
+double matVector2D::angle(const matVector2D& a_vc2) const
+//
+// lav 29/10/13 written.
+//
+{
+  return atan2(cross_prod_z(a_vc2), scal_prod(a_vc2));
+}
 //=============================================================================

@@ -47,8 +47,7 @@ static bool average(std::vector<shared_ptr<IGirder>> a_list, Girder& a_result)
     d_total_weight += girders_list[i_index].m_weight;
     ++itr;
   }
-  _ASSERT(IS_ZERO(d_total_weight) == (a_list.size() == 1));
-
+  
   if (a_list.size() == 1) {
     a_result = girders_list[0];
     return true;

@@ -219,12 +219,12 @@ bool run_segment_intersection(
 //
 {
   matLine2DSegment sg1(
-    matPoint2DConstr(a_d_x1_1, a_d_y1_1),
-    matPoint2DConstr(a_d_x2_1, a_d_y2_1)
+    matPoint2D(a_d_x1_1, a_d_y1_1),
+    matPoint2D(a_d_x2_1, a_d_y2_1)
   );
   matLine2DSegment sg2(
-    matPoint2DConstr(a_d_x1_2, a_d_y1_2), 
-    matPoint2DConstr(a_d_x2_2, a_d_y2_2)
+    matPoint2D(a_d_x1_2, a_d_y1_2), 
+    matPoint2D(a_d_x2_2, a_d_y2_2)
   );
 
   bool b_total_result = true;
@@ -304,6 +304,30 @@ bool run_stack_convex(
   stack.push_back(shp_p4);
 
   return a_b_is_convex ? stack.is_convex() >= 1 : stack.is_convex() <= 0;
+}
+
+//=============================================================================
+bool run_stack_rotation_direction(std::string a_file_name, bool a_b_check)
+//
+// lav 29/10/13 written.
+//
+{
+  grdRingStack stack;
+
+  std::string str_line;
+  std::ifstream file(a_file_name);
+  if (file.is_open()) {
+    std::vector<std::string> str_array;
+    while (std::getline(file, str_line)) {
+      boost::split(str_array, str_line, boost::is_any_of(","));
+      stack.push_back(pPoint(new matPoint2D(
+        boost::lexical_cast<double>(*str_array.begin()),
+        boost::lexical_cast<double>(*(++str_array.begin()))
+      )));
+    }
+  }
+
+  return stack.detect_rotation_direction() == a_b_check;
 }
 
 //=============================================================================
@@ -572,6 +596,29 @@ int main()
     show(
       run_convex_figure_gravity_centre_and_weight("file7.txt", 0, 2.5, 3.25),
       "[Convex figure gravity centre and weight calculation testing]"
+    );
+    /*show(
+      run_convex_figure_gravity_centre_and_weight("file8_not_convex.txt", 0, 2.5, 3.25),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );*/
+    show(
+      run_convex_figure_gravity_centre_and_weight("file_stack_rotation_test.txt", 25.5, 0.77777777782815127, 4.1111111111111),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file_stack_rotation_test_CCW.txt", 25.5, 0.77777777782815127, 4.1111111111111),
+      "[Convex figure gravity centre and weight calculation testing]"
+    );
+  }
+  
+  std::cout << std::endl;
+
+  { // Stack rotation direction detecting testing
+    show(run_stack_rotation_direction("file_stack_rotation_test.txt", false), 
+      "[Stack rotation direction detecting testing]"
+    );
+    show(run_stack_rotation_direction("file_stack_rotation_test_CCW.txt", true), 
+      "[Stack rotation direction detecting testing]"
     );
   }
 

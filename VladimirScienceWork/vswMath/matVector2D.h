@@ -4,12 +4,12 @@
 #include <assert.h>
 #include <crtdbg.h>
 
-#define _ASSERT_NULL_POINTER(p) _ASSERT(p!=NULL)
-
-#define _POINTS_COMPARISON 1e-4
-#define _LINE_DIFF 1e-6
-#define _ZERO 1e-8
-#define IS_ZERO(a) abs(a) < _ZERO
+#define _ASSERT_NULL_POINTER(p)             _ASSERT(p!=NULL)
+#define PI                                  3.14159265358979323846
+#define _POINTS_COMPARISON                  1e-4
+#define _LINE_DIFF                          1e-6
+#define _ZERO                               1e-8
+#define IS_ZERO(a)                          abs(a) < _ZERO
 
 struct matPoint2D {
   matPoint2D(){}
@@ -17,14 +17,6 @@ struct matPoint2D {
   double X;
   double Y;
 };
-
-static matPoint2D matPoint2DConstr(double x, double y) {
-  static matPoint2D pn;
-  pn.X = x;
-  pn.Y = y;
-
-  return pn;
-}
 
 static bool are_points_equal(
   const matPoint2D& a_pn1, 
@@ -69,6 +61,7 @@ public: /* MEMBER FUNCTIONS */
   double get_norm() const;
   double scal_prod(const matVector2D&) const;
   double cross_prod_z(const matVector2D&) const;
+  double angle(const matVector2D&) const;
 
   const matVector2D get_normalized_vector() const;
   const matVector2D get_reverted() const;

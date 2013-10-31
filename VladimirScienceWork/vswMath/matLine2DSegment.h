@@ -57,7 +57,7 @@ public: /* MAIN FUNCTIONS */
 
   const matVector2D get_start_end_vector() const;
   const matVector2D get_end_start_vector() const;
-
+    
   const matPoint2D get_point_by_lambda(double a_d_lambda) const;
 
   eIntersectionPlace recognize_intersection(

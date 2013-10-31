@@ -18,7 +18,7 @@ enum eVectorsTurn{
 enum eConvexityCase {
   CC_ERROR = -1,
   CC_NOT_CONVEX = 0,
-  CC_LIMIT_POINTS_ONLY = 1,
+  CC_BORDER_POINTS_ONLY = 1,
   CC_CONVEX = 2
 };
 
@@ -40,10 +40,13 @@ private: /* INNER METHODS */
   
 public: /* MAIN METHODS */
 
+  bool detect_rotation_direction() const;
+  bool get_itr_by_content(const matPoint2D*,VectorPoints::iterator&) ;
+
   eConvexityCase is_convex() const;
 
   size_t get_size() const;
-
+  
 public: /* ACCESSORS */
 
   void push_back(boost::shared_ptr<matPoint2D>&);
@@ -52,7 +55,9 @@ public: /* ACCESSORS */
   
   VectorPoints::const_iterator get_stack_begin() const { return m_stack.begin(); }
   VectorPoints::const_iterator get_stack_end() const { return m_stack.end(); }
-
+  VectorPoints::iterator get_stack_begin_not_const() { return m_stack.begin(); }
+  VectorPoints::iterator get_stack_end_not_const() { return m_stack.end(); }
+  
 private: /* MEMBERS */ 
 
   VectorPoints m_stack;

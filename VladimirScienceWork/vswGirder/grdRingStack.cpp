@@ -72,7 +72,7 @@ eConvexityCase grdRingStack::is_convex() const
 {
   if (get_size() < 3) {
     // just point or line case
-    return CC_LIMIT_POINTS_ONLY;
+    return CC_BORDER_POINTS_ONLY;
   }
 
   VectorPoints::const_iterator itr_start = m_stack.begin();
@@ -86,8 +86,8 @@ eConvexityCase grdRingStack::is_convex() const
       *(itr_third->get())
     );
     if (++itr_third == m_stack.end()) {
-      // wow, the figure consists of limit points only
-      return CC_LIMIT_POINTS_ONLY;
+      // the figure consists of border points only if there were not any turns
+      return e_first_turn == VT_NONE ? CC_BORDER_POINTS_ONLY : CC_CONVEX;
     }
     ++itr_start;
     ++itr_end;
@@ -115,6 +115,55 @@ eConvexityCase grdRingStack::is_convex() const
   }
 
   return CC_CONVEX;
+}
+
+//=============================================================================
+bool grdRingStack::detect_rotation_direction() const
+//
+// lav 29/10/13 written.
+//
+{
+  if (m_stack.size() < 3) {
+    return false;
+  }
+  size_t i_ind0 = 0;
+  size_t i_ind1 = 0;
+  size_t i_ind2 = 1;
+  double d_angle_value = 0;
+  for (i_ind0; i_ind0 < m_stack.size(); i_ind0++) {
+    if (++i_ind1 >= m_stack.size()) {
+      i_ind1 = 0;
+    }
+    if (++i_ind2 >= m_stack.size()) {
+      i_ind2 = 0;
+    }
+    d_angle_value += matVector2D(*m_stack[i_ind0], *m_stack[i_ind1]).angle(
+      matVector2D(*m_stack[i_ind1], *m_stack[i_ind2])
+    );
+  }
+  _ASSERT(IS_ZERO(fmod(abs(d_angle_value), 2*PI)));
+  _ASSERT(IS_ZERO(d_angle_value) == false);
+
+  return d_angle_value > 0;
+}
+
+//=============================================================================
+bool grdRingStack::get_itr_by_content(
+  const matPoint2D* a_p_point,
+  VectorPoints::iterator& a_itr_out
+) 
+//
+// lav 31/10/13 written.
+//
+{
+  a_itr_out = m_stack.begin();
+  while (a_itr_out != m_stack.end()) {
+    if (a_itr_out->get() == a_p_point) {
+      return true;
+    }
+    ++a_itr_out;
+  }
+  return false;
 }
 
 //=============================================================================

@@ -275,6 +275,7 @@ eIntersectionPlace matLine2DSegment::recognize_intersection(
 
   if (!is_equal(a_sg)) {
     if (is_parallel(a_sg)) {
+      // no intersection
       return IP_NONE;
     }
 
@@ -290,13 +291,16 @@ eIntersectionPlace matLine2DSegment::recognize_intersection(
       
       a_shp_output = shp_intr;
       if (is_point_within(*shp_intr.get())) {
+        // intersection belongs to both segments
         return IP_BOTH;
       }
+      // intersection is in the second segment
       return IP_MIDDLE;
 
     } else if (a_sg.is_point_on_edge(*shp_intr.get()) == ePointOnEdgeResult::POER_FIRST) {
 
       a_shp_output = a_sg.m_shp_point1;
+      // intersection is on the edge of the second segment
       return IP_EDGE;
 
     } else if (a_sg.is_point_on_edge(*shp_intr.get()) == ePointOnEdgeResult::POER_SECOND) {
@@ -322,7 +326,7 @@ eIntersectionPlace matLine2DSegment::recognize_intersection(
     _ASSERT(0);
     return IP_ERROR;
   }
-
+  // segments belong to the same line
   return IP_FULL;
 }
 
