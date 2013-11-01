@@ -18,13 +18,14 @@ private: /* INNER */
   bool separate_to_member(
     const matPoint2D* a_p_ray_p2,
     const matPoint2D* a_p_pierced_p2,
-    const matPoint2D& a_pn_separator
+    const matPoint2D& a_pn_separator,
+    eIntersectionPlace a_e_intr_place
   );
-  bool find_further_intersection(
+  eIntersectionPlace find_further_intersection(
     const matLine2DSegment& a_sg_ray,
-    int a_i_start_from,
+    size_t a_i_start_from,
     shared_ptr<matPoint2D>& a_shp_out,
-    int& a_i_pierced_segment
+    size_t& a_i_pierced_segment
   ) const;
 
   int triangulate_to_member();

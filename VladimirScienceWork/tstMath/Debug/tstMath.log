@@ -1,9 +1,40 @@
-﻿Build started 31.10.2013 16:50:55.
-     1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" on node 2 (Build target(s)).
-     1>InitializeBuildStatus:
+﻿Build started 01.11.2013 17:04:17.
+     1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" on node 2 (Rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\tstMath.lastbuildstate".
+       InitializeBuildStatus:
          Creating "Debug\tstMath.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         All outputs are up-to-date.
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Boost\boost_1_54_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt tstMain.cpp
+         tstMain.cpp
+     1>c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2176): warning C4996: 'std::_Copy_impl': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\xutility(2157) : see declaration of 'std::_Copy_impl'
+                 c:\boost\boost_1_54_0\boost\algorithm\string\detail\classification.hpp(102) : see reference to function template instantiation '_OutIt std::copy<const char*,char*>(_InIt,_InIt,_OutIt)' being compiled
+                 with
+                 [
+                     _OutIt=char *,
+                     _InIt=const char *
+                 ]
+                 c:\boost\boost_1_54_0\boost\algorithm\string\classification.hpp(206) : see reference to function template instantiation 'boost::algorithm::detail::is_any_ofF<CharT>::is_any_ofF<boost::iterator_range<IteratorT>>(const RangeT &)' being compiled
+                 with
+                 [
+                     CharT=char,
+                     IteratorT=const char *,
+                     RangeT=boost::iterator_range<const char *>
+                 ]
+                 c:\boost\boost_1_54_0\boost\algorithm\string\classification.hpp(206) : see reference to function template instantiation 'boost::algorithm::detail::is_any_ofF<CharT>::is_any_ofF<boost::iterator_range<IteratorT>>(const RangeT &)' being compiled
+                 with
+                 [
+                     CharT=char,
+                     IteratorT=const char *,
+                     RangeT=boost::iterator_range<const char *>
+                 ]
+                 c:\users\lav\documents\github\vsw\vladimirsciencework\tstmath\tstmain.cpp(322) : see reference to function template instantiation 'boost::algorithm::detail::is_any_ofF<CharT> boost::algorithm::is_any_of<const char[2]>(RangeT (&))' being compiled
+                 with
+                 [
+                     CharT=char,
+                     RangeT=const char [2]
+                 ]
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\tstMath.lib" /MACHINE:X86 Debug\tstMain.obj
          C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib
@@ -12,8 +43,8 @@
        FinalizeBuildStatus:
          Deleting file "Debug\tstMath.unsuccessfulbuild".
          Touching "Debug\tstMath.lastbuildstate".
-     1>Done Building Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\tstMath\tstMath.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.51
+Time Elapsed 00:00:02.92

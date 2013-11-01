@@ -29,12 +29,13 @@ size_t grdRingStack::get_size() const
 }
 
 //=============================================================================
-boost::shared_ptr<matPoint2D> grdRingStack::get_point_by_ind(int a_ind) const
+shared_ptr<matPoint2D> grdRingStack::get_point_by_ind(size_t a_ind) const
 //
 // lav 20/10/13 written.
+// lav 01/11/13 assertion condition strengthened.
 //
 {
-  _ASSERT(a_ind < (int) get_size());
+  _ASSERT(a_ind < get_size() && a_ind >= 0);
 
   return m_stack[a_ind];
 }
@@ -163,7 +164,49 @@ bool grdRingStack::get_itr_by_content(
     }
     ++a_itr_out;
   }
+  _ASSERT(0);
   return false;
+}
+
+//=============================================================================
+std::vector<matLine2DSegment> grdRingStack::get_segment_list() const
+//
+// lav 01/11/13 written.
+//
+{
+  std::vector<matLine2DSegment> result_list;
+  if (m_stack.size() == 0) {
+    return result_list;
+  }
+  matPoint2D* p_point1 = m_stack.begin()->get();
+  VectorPoints::const_iterator itr = ++m_stack.begin();
+  while (itr != m_stack.end()) {
+
+    matPoint2D* p_point2 = itr->get();
+    result_list.push_back(matLine2DSegment(*p_point1, *p_point2));
+
+    p_point1 = p_point2;
+    p_point2 = (++itr)->get();
+  }
+
+  return result_list;
+}
+
+//=============================================================================
+bool grdRingStack::is_valid() const
+//
+// lav 01/11/13 written.
+//
+{
+  if (m_stack.size() == 0) {
+    return false;
+  }
+
+  if (m_stack.size() <= 3) {
+    return true;
+  }
+
+  return true;
 }
 
 //=============================================================================
