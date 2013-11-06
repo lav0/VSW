@@ -9,8 +9,25 @@ matLine2D(a_pn1, a_pn2)
 //
 {
   _ASSERT(is_defined());
-  m_shp_point1 = boost::shared_ptr<matPoint2D>(new matPoint2D(a_pn1));
-  m_shp_point2 = boost::shared_ptr<matPoint2D>(new matPoint2D(a_pn2));
+  m_shp_point1 = shared_ptr<matPoint2D>(new matPoint2D(a_pn1));
+  m_shp_point2 = shared_ptr<matPoint2D>(new matPoint2D(a_pn2));
+
+  define_pointers();
+}
+
+//=============================================================================
+matLine2DSegment::matLine2DSegment(
+  shared_ptr<matPoint2D> a_shp_pn1, 
+  shared_ptr<matPoint2D> a_shp_pn2
+) : 
+matLine2D(*a_shp_pn1, *a_shp_pn2)
+//
+// lav 06/11/13 written.
+//
+{
+  _ASSERT(is_defined());
+  m_shp_point1 = a_shp_pn1;
+  m_shp_point2 = a_shp_pn2;
 
   define_pointers();
 }

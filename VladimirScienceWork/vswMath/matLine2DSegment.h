@@ -1,6 +1,9 @@
 #pragma once
 
 #include "matLine2D.h"
+#include <boost/smart_ptr/shared_ptr.hpp>
+
+using namespace boost;
 
 enum eIntersectionPlace {
   IP_ERROR = -1,
@@ -33,6 +36,7 @@ public: /* CONSTRUCTORS */
 
   matLine2DSegment() : matLine2D(){ set_defined(false); }
   matLine2DSegment(matPoint2D, matPoint2D);
+  matLine2DSegment(shared_ptr<matPoint2D>, shared_ptr<matPoint2D>);
 
   bool assign(matPoint2D, matPoint2D);
   
@@ -76,8 +80,8 @@ public: /*  ACCESSORS */
 
 private: /* MEMBERS */
   
-  boost::shared_ptr<matPoint2D> m_shp_point1;
-  boost::shared_ptr<matPoint2D> m_shp_point2;
+  shared_ptr<matPoint2D> m_shp_point1;
+  shared_ptr<matPoint2D> m_shp_point2;
 
   boost::weak_ptr<matPoint2D> m_wkp_left;
   boost::weak_ptr<matPoint2D> m_wkp_right;

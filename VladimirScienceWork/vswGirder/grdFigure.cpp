@@ -273,6 +273,9 @@ bool grdFigure::calculate_gravity_centre_and_weight(Girder& a_result)
     _ASSERT(b_singular_pushed);
   } else {
     _ASSERT(e_convexity == CC_NOT_CONVEX);
+    if (!m_points.is_valid()) {
+      return false;
+    }
     split();
   }
 

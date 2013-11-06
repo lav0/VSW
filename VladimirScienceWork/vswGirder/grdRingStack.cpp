@@ -171,23 +171,25 @@ bool grdRingStack::get_itr_by_content(
 //=============================================================================
 std::vector<matLine2DSegment> grdRingStack::get_segment_list() const
 //
-// lav 01/11/13 written.
+// lav 01/11/13 stated writing
+// lav 06/11/13 ended.
 //
 {
   std::vector<matLine2DSegment> result_list;
   if (m_stack.size() == 0) {
     return result_list;
   }
-  matPoint2D* p_point1 = m_stack.begin()->get();
-  VectorPoints::const_iterator itr = ++m_stack.begin();
-  while (itr != m_stack.end()) {
+  shared_ptr<matPoint2D> shp_point1 = *m_stack.begin();
+  VectorPoints::const_iterator itr = m_stack.begin();
+  while (++itr != m_stack.end()) {
 
-    matPoint2D* p_point2 = itr->get();
-    result_list.push_back(matLine2DSegment(*p_point1, *p_point2));
+    shared_ptr<matPoint2D> shp_point2 = *itr;
+    result_list.push_back(matLine2DSegment(shp_point1, shp_point2));
 
-    p_point1 = p_point2;
-    p_point2 = (++itr)->get();
+    shp_point1 = shp_point2;
   }
+
+  result_list.push_back(matLine2DSegment(shp_point1, *m_stack.begin()));
 
   return result_list;
 }
@@ -204,6 +206,23 @@ bool grdRingStack::is_valid() const
 
   if (m_stack.size() <= 3) {
     return true;
+  }
+
+  // check for self-intersection
+  std::vector<matLine2DSegment> segment_list = get_segment_list();
+  std::vector<matLine2DSegment>::const_iterator itr0 = segment_list.begin();
+  std::vector<matLine2DSegment>::const_iterator itr1 = ++segment_list.begin();
+  while (itr0 != --segment_list.end()) {
+    while (itr1 != segment_list.end()) {
+      shared_ptr<matPoint2D> shp_useless;
+      if (itr0->recognize_intersection(*itr1, shp_useless) == IP_BOTH) {
+        return false;
+      }
+      ++itr1;
+    }
+    ++itr0;
+    itr1 = itr0;
+    ++itr1;
   }
 
   return true;
