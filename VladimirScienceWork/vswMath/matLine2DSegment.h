@@ -71,6 +71,9 @@ public: /* MAIN FUNCTIONS */
 
 public: /*  ACCESSORS */
 
+  const matPoint2D* get_first_pointer() const;
+  const matPoint2D* get_second_pointer() const;
+
   const matPoint2D get_first_point() const;
   const matPoint2D get_second_point() const;
 

@@ -78,6 +78,24 @@ void matLine2DSegment::define_pointers()
 }
 
 //=============================================================================
+const matPoint2D* matLine2DSegment::get_first_pointer() const
+//
+// lav 08/11/13 written.
+//
+{
+  return m_shp_point1.get();
+}
+
+//=============================================================================
+const matPoint2D* matLine2DSegment::get_second_pointer() const
+//
+// lav 08/11/13 written.
+//
+{
+  return m_shp_point2.get();
+}
+
+//=============================================================================
 const boost::shared_ptr<matPoint2D> matLine2DSegment::get_pointer(
   ePointerPlace a_e_place
 ) const

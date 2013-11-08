@@ -22,10 +22,10 @@ private: /* INNER */
     eIntersectionPlace a_e_intr_place
   );
   eIntersectionPlace find_further_intersection(
-    const matLine2DSegment& a_sg_ray,
-    size_t a_i_start_from,
+    const std::vector<matLine2DSegment>&,
+    const std::vector<matLine2DSegment>::iterator&,
     shared_ptr<matPoint2D>& a_shp_out,
-    size_t& a_i_pierced_segment
+    std::vector<matLine2DSegment>::const_iterator& a_itr_out
   ) const;
 
   int triangulate_to_member();

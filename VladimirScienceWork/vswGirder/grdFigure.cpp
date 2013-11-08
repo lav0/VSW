@@ -124,6 +124,7 @@ bool grdFigure::split()
 //
 // lav 29/10/13 written.
 // lav 01/11/13 refactored.
+// lav 08/11/13 rewritten.
 //
 {
   if (m_points.get_size() <= 3) {
@@ -132,43 +133,35 @@ bool grdFigure::split()
   }
   bool b_is_counter_clockwise = m_points.detect_rotation_direction();
 
-  matPoint2D* p_point0;
-  matPoint2D* p_point1;
-  matPoint2D* p_point2;
-  // bad bad bad!!!
-  for (size_t i=0; i<m_points.get_size(); i++) {
-
-    (i == 0 ? p_point0 : (i == 1 ? p_point1 : p_point2)) = 
-      m_points.get_point_by_ind(i).get();
-    if (i <= 1) { 
-      continue;
-    }
-   
-    matVector2D vc0(*p_point0, *p_point1);
-    matVector2D vc1(*p_point1, *p_point2);
-    if ((vc0.cross_prod_z(vc1) > 0) != b_is_counter_clockwise) {
-      size_t i_pierced = -1;
-      shared_ptr<matPoint2D> shp_separator(new matPoint2D);
-      eIntersectionPlace e_intr_place = find_further_intersection(
-        matLine2DSegment(*p_point0, *p_point1),
-        i,
-        shp_separator,
-        i_pierced
+  std::vector<matLine2DSegment> segment_list = m_points.get_segment_list();
+  std::vector<matLine2DSegment>::iterator itr0 = segment_list.begin();
+  std::vector<matLine2DSegment>::iterator itr1 = ++segment_list.begin();
+  while (itr1 != segment_list.end()) {
+    bool b_local_ccw_turn = itr0->get_start_end_vector().cross_prod_z(
+      itr1->get_start_end_vector()
+    ) >= 0;
+    if (b_local_ccw_turn != b_is_counter_clockwise) {
+      shared_ptr<matPoint2D> shp_intersection_point;
+      std::vector<matLine2DSegment>::const_iterator itr_out;
+      eIntersectionPlace e_intersection_place = find_further_intersection(
+        segment_list,
+        itr0,
+        shp_intersection_point,
+        itr_out
       );
-      if (e_intr_place >= IP_MIDDLE) {
+      _ASSERT(e_intersection_place != IP_ERROR);
+      if (e_intersection_place != IP_NONE) {
         return separate_to_member(
-          p_point1,
-          m_points.get_point_by_ind(i_pierced).get(),
-          *shp_separator.get(),
-          e_intr_place
+          itr0->get_second_pointer(),
+          itr_out->get_second_pointer(),
+          *shp_intersection_point.get(),
+          e_intersection_place
         );
       }
     }
-
-    p_point0 = p_point1;
-    p_point1 = p_point2;
+    ++itr0;
+    ++itr1;
   }
-  _ASSERT(m_points.is_convex());
   return false;
 }
 
@@ -219,33 +212,33 @@ bool grdFigure::separate_to_member(
 
 //=============================================================================
 eIntersectionPlace grdFigure::find_further_intersection(
-  const matLine2DSegment& a_sg_ray,
-  size_t a_i_start_from,
+  const std::vector<matLine2DSegment>& a_list,
+  const std::vector<matLine2DSegment>::iterator& a_iterator,
   shared_ptr<matPoint2D>& a_shp_out,
-  size_t& a_i_pierced_segment_out
+  std::vector<matLine2DSegment>::const_iterator& a_itr_out
 ) const
 //
 // lav 29/10/13 written.
 // lav 01/11/13 refactored.
+// lav 08/11/13 rewritten.
 //
 {
-  if (m_points.get_size() <= a_i_start_from) {
+  if (a_list.end() == a_iterator) {
     return IP_ERROR;
   }
-  
-  for (size_t i=a_i_start_from; i<m_points.get_size(); i++) {
-    
-    a_i_pierced_segment_out = (i+1 >= m_points.get_size()) ? 0 : i+1;
 
-    matLine2DSegment segment(
-      *m_points.get_point_by_ind(i).get(), 
-      *m_points.get_point_by_ind(a_i_pierced_segment_out).get()
-    );
+  a_itr_out = a_iterator;
+  if (++a_itr_out == a_list.end()) {
+    a_itr_out = a_list.begin();
+  }
+  
+  while (++a_itr_out != a_iterator) {
+    
+    a_itr_out = (a_itr_out == a_list.end()) ? a_list.begin() : a_itr_out;
+        
     eIntersectionPlace e_inter_res = 
-      a_sg_ray.recognize_intersection(segment, a_shp_out);
-    /*if (e_inter_res == IP_EDGE) {
-      
-    }*/
+      a_iterator->recognize_intersection(*a_itr_out, a_shp_out);
+    
     if (e_inter_res >= IP_MIDDLE) {
       return e_inter_res;
     }
