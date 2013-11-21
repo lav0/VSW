@@ -142,18 +142,21 @@ bool grdTriangle::weight(double& a_d_out) const
 ///////////////////////////////////////////////////////////////////////////////
 //
 // lav 23/10/13 written.
-// lav 25/10/13 return type made bool. output goes by ref
+// lav 25/10/13 return type made bool. output goes by ref.
+// lav 19/11/13 optimized.
 //
 {
   if (!is_valid()) {
     return false;
   }
 
+  double d_semi_perimeter = semi_perimeter();
+
   a_d_out =  sqrt(
-    semi_perimeter() * (
-      semi_perimeter() - vector12().get_norm()) * (
-      semi_perimeter() - vector23().get_norm()) * (
-      semi_perimeter() - vector31().get_norm()
+    d_semi_perimeter * (
+      d_semi_perimeter - vector12().get_norm()) * (
+      d_semi_perimeter - vector23().get_norm()) * (
+      d_semi_perimeter - vector31().get_norm()
     )
   );
   return a_d_out > _ZERO;

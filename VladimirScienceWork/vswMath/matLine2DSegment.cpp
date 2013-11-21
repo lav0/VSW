@@ -353,13 +353,19 @@ eIntersectionPlace matLine2DSegment::recognize_intersection(
     return IP_SAME;
   }
   
-  if (get_pointer(PP_RIGHT)->X < a_sg.get_pointer(PP_LEFT)->X){
+  if (get_pointer(PP_RIGHT)->X < a_sg.get_pointer(PP_LEFT)->X) {
     a_shp_output = a_sg.get_pointer(PP_LEFT);
-  } else if (get_pointer(PP_LEFT)->X > a_sg.get_pointer(PP_RIGHT)->X){
+  } else if (get_pointer(PP_LEFT)->X > a_sg.get_pointer(PP_RIGHT)->X) {
     a_shp_output = a_sg.get_pointer(PP_RIGHT);
   } else {
-    _ASSERT(0);
-    return IP_ERROR;
+    if (get_pointer(PP_TOP)->Y < a_sg.get_pointer(PP_BOTTOM)->Y) {
+      a_shp_output = a_sg.get_pointer(PP_BOTTOM);
+    } else if (get_pointer(PP_BOTTOM)->Y > a_sg.get_pointer(PP_TOP)->Y) {
+      a_shp_output = a_sg.get_pointer(PP_TOP);
+    } else {
+      _ASSERT(0);
+      return IP_ERROR;
+    }
   }
   // segments belong to the same line
   return IP_FULL;

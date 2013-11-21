@@ -613,18 +613,22 @@ int main()
       run_convex_figure_gravity_centre_and_weight("file_stack_rotation_test _diff_start.txt", 25.5, 0.77777777782815127, 4.1111111111111),
       "[Convex figure gravity centre and weight calculation testing]"
     );
-    show(
+    /*show(
       run_convex_figure_gravity_centre_and_weight("file_invalid_figure.txt", 25.5, 0.77777777782815127, 4.1111111111111),
       "[Convex figure gravity centre and weight calculation testing]"
+    );*/
+    show(
+      run_convex_figure_gravity_centre_and_weight("file_spec_situation.txt", 8.5, 0.84313725494411773, 2.2941176471117641),
+      "[Convex figure gravity centre and weight calculation testing]"
     );
-    /*show(
-      run_convex_figure_gravity_centre_and_weight("file_spec_situation.txt", 8.5, 0.77777777782815127, 4.1111111111111),
+    show(
+      run_convex_figure_gravity_centre_and_weight("file_spec_situation_diff_start.txt", 8.5, 0.84313725494411773, 2.2941176471117641),
       "[Convex figure gravity centre and weight calculation testing]"
-    );*/
-    /*show(
-      run_convex_figure_gravity_centre_and_weight("file_spec_situation_diff_start.txt", 8.5, 0.77777777782815127, 4.1111111111111),
+    );
+    show(
+      run_convex_figure_gravity_centre_and_weight("file_spec_situation_diff_start1.txt", 8.5, 0.84313725494411773, 2.2941176471117641),
       "[Convex figure gravity centre and weight calculation testing]"
-    );*/
+    );
   }
   
   std::cout << std::endl;

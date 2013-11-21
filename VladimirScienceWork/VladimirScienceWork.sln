@@ -1,11 +1,16 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vswMath", "vswMath\vswMath.vcxproj", "{F0E98CA1-3486-41F6-B990-FC15B67F2AF1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tstMath", "tstMath\tstMath.vcxproj", "{31E92767-4D2A-44F0-B56A-734293196C9A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vswGirder", "vswGirder\vswGirder.vcxproj", "{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vswConsoleApp", "vswConsoleApp\vswConsoleApp.vcxproj", "{8D48727C-71F2-46B9-9922-4D533F4443D9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86} = {6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +30,10 @@ Global
 		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}.Debug|Win32.Build.0 = Debug|Win32
 		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}.Release|Win32.ActiveCfg = Release|Win32
 		{6ACF7F62-7FFB-4130-90C8-3D44F3FB2B86}.Release|Win32.Build.0 = Release|Win32
+		{8D48727C-71F2-46B9-9922-4D533F4443D9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8D48727C-71F2-46B9-9922-4D533F4443D9}.Debug|Win32.Build.0 = Debug|Win32
+		{8D48727C-71F2-46B9-9922-4D533F4443D9}.Release|Win32.ActiveCfg = Release|Win32
+		{8D48727C-71F2-46B9-9922-4D533F4443D9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
