@@ -136,7 +136,8 @@ bool grdFigure::split()
   std::vector<matLine2DSegment> segment_list = m_points.get_segment_list();
   std::vector<matLine2DSegment>::iterator itr0 = segment_list.begin();
   std::vector<matLine2DSegment>::iterator itr1 = ++segment_list.begin();
-  while (itr1 != segment_list.end()) {
+
+  while (itr0 != segment_list.end()) {
     bool b_local_ccw_turn = itr0->get_start_end_vector().cross_prod_z(
       itr1->get_start_end_vector()
     ) >= 0;
@@ -160,7 +161,9 @@ bool grdFigure::split()
       }
     }
     ++itr0;
-    ++itr1;
+    if (++itr1 == segment_list.end()) {
+      itr1 = segment_list.begin(); 
+    }
   }
   return false;
 }
@@ -249,10 +252,11 @@ eIntersectionPlace grdFigure::find_further_intersection(
 }
 
 //=============================================================================
-bool grdFigure::calculate_gravity_centre_and_weight(Girder& a_result)
+eMainCalculationResult grdFigure::calculate_gravity_centre_and_weight(Girder& a_result)
 //
 // lav 24/10/13 written.
 // lav 25/10/13 extended.
+// lav 22/11/13 return type changed.
 //
 {
   eConvexityCase e_convexity = check_for_convexity();
@@ -267,7 +271,7 @@ bool grdFigure::calculate_gravity_centre_and_weight(Girder& a_result)
   } else {
     _ASSERT(e_convexity == CC_NOT_CONVEX);
     if (!m_points.is_valid()) {
-      return false;
+      return MCR_INVALID_FIGURE;
     }
     split();
   }

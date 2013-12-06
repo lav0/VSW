@@ -142,7 +142,7 @@ bool grdRingStack::detect_rotation_direction() const
       matVector2D(*m_stack[i_ind1], *m_stack[i_ind2])
     );
   }
-  _ASSERT(IS_ZERO(fmod(abs(d_angle_value), 2*PI)));
+  //_ASSERT(IS_ZERO(fmod(abs(d_angle_value), 2*PI)));
   _ASSERT(IS_ZERO(d_angle_value) == false);
 
   return d_angle_value > 0;

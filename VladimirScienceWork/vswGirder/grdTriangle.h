@@ -28,7 +28,8 @@ private: /* INNER METHODS*/
 
 public:
 
-  bool calculate_gravity_centre_and_weight(Girder&);
+  eMainCalculationResult calculate_gravity_centre_and_weight(Girder&);
+
   bool weight(double&) const;
   bool gravity_centre(matPoint2D&) const;
   

@@ -178,14 +178,16 @@ bool grdTriangle::gravity_centre(matPoint2D& a_vc_out) const
 }
 
 //=============================================================================
-bool grdTriangle::calculate_gravity_centre_and_weight(Girder& a_result)
+eMainCalculationResult grdTriangle::calculate_gravity_centre_and_weight(Girder& a_result)
 //
 // lav 24/10/13 written.
 // lav 25/10/13 rewritten.
+// lav 22/11/13 return type changed.
 //
 {
-  return weight(a_result.m_weight) &&
-    gravity_centre(a_result.m_gravity_centre);
+  return 
+    weight(a_result.m_weight) && gravity_centre(a_result.m_gravity_centre) ?
+    MCR_SUCCEEDED : MCR_FAIL;
 }
 
 //=============================================================================

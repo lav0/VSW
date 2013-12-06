@@ -9,6 +9,13 @@
 
 using namespace boost;
 
+enum eMainCalculationResult {
+  MCR_UNKNOWN = -1,
+  MCR_FAIL = 0,
+  MCR_INVALID_FIGURE = MCR_FAIL + 1,
+  MCR_SUCCEEDED = MCR_INVALID_FIGURE + 1
+};
+
 struct Girder
 {
   double m_weight;
@@ -17,18 +24,22 @@ struct Girder
 
 struct IGirder
 {
-  virtual bool calculate_gravity_centre_and_weight(Girder&) = 0;
+  virtual eMainCalculationResult calculate_gravity_centre_and_weight(Girder&) = 0;
 };
 
 
 //=============================================================================
-static bool average(std::vector<shared_ptr<IGirder>> a_list, Girder& a_result)
+static eMainCalculationResult average(
+  std::vector<shared_ptr<IGirder>> a_list, 
+  Girder& a_result
+)
 //
-// Find weight and centre of the whole income list
+// Find weight and centre of the whole income list. Output is a_result.
 //
 ///////////////////////////////////////////////////////////////////////////////
 //
 // lav 24/10/13 written.
+// lav 22/11/13 return type changed.
 //
 {
   double d_total_weight = 0;
@@ -37,12 +48,14 @@ static bool average(std::vector<shared_ptr<IGirder>> a_list, Girder& a_result)
   std::vector<shared_ptr<IGirder>>::const_iterator itr = a_list.begin();
 
   if (itr == a_list.end()) {
-    return false;
+    return MCR_FAIL;
   }
   size_t i_index = 0;
+  eMainCalculationResult e_res = MCR_UNKNOWN;
   for (i_index; i_index < a_list.size(); i_index++) {
-    if (!(*itr)->calculate_gravity_centre_and_weight(girders_list[i_index])) {
-      return false;
+    e_res = (*itr)->calculate_gravity_centre_and_weight(girders_list[i_index]);
+    if (e_res < MCR_SUCCEEDED) {
+      return e_res;
     }
     d_total_weight += girders_list[i_index].m_weight;
     ++itr;
@@ -50,7 +63,7 @@ static bool average(std::vector<shared_ptr<IGirder>> a_list, Girder& a_result)
   
   if (a_list.size() == 1) {
     a_result = girders_list[0];
-    return true;
+    return MCR_SUCCEEDED;
   }
 
   const double d_inverse_total_weight = 1 / d_total_weight;  
@@ -66,5 +79,5 @@ static bool average(std::vector<shared_ptr<IGirder>> a_list, Girder& a_result)
   } while (i_index > 0);
 
   a_result = result;
-  return true;
+  return MCR_SUCCEEDED;
 }

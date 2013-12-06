@@ -15,7 +15,7 @@ public:
 
 public: /* OVERRIDEN METHOD */
 
-  bool calculate_gravity_centre_and_weight(Girder&);
+  eMainCalculationResult calculate_gravity_centre_and_weight(Girder&);
 
 private: /* MEMBER */
 

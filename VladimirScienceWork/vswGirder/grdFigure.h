@@ -33,7 +33,7 @@ private: /* INNER */
 
 public: /* MAIN FUNCTIONS */
 
-  bool calculate_gravity_centre_and_weight(Girder&);
+  eMainCalculationResult calculate_gravity_centre_and_weight(Girder&);
 
   void push_back(shared_ptr<matPoint2D>&);
 

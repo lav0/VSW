@@ -36,8 +36,6 @@ private:
 
   bool m_b_is_valid;
 
-  ifstream m_file_name;
-
   vector<string> m_nodes;
   vector<string>::iterator m_iterator; 
 };

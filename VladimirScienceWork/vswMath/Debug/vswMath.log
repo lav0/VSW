@@ -1,16 +1,16 @@
-﻿Build started 21.11.2013 17:56:36.
-     1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (Rebuild target(s)).
-     1>_PrepareForClean:
-         Deleting file "Debug\vswMath.lastbuildstate".
-       InitializeBuildStatus:
+﻿Build started 03.12.2013 18:21:09.
+     1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
          Creating "Debug\vswMath.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Boost\boost_1_54_0 /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt matLine2D.cpp matLine2DSegment.cpp matTriangle.cpp matVector2D.cpp matVector2DUnit.cpp
+         matLine2D.cpp
+         Generating Code...
+         Compiling...
          matVector2DUnit.cpp
          matVector2D.cpp
          matTriangle.cpp
          matLine2DSegment.cpp
-         matLine2D.cpp
          Generating Code...
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\Debug\vswMath.lib" /NOLOGO Debug\matLine2D.obj
@@ -22,8 +22,8 @@
        FinalizeBuildStatus:
          Deleting file "Debug\vswMath.unsuccessfulbuild".
          Touching "Debug\vswMath.lastbuildstate".
-     1>Done Building Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.62
+Time Elapsed 00:00:01.74

@@ -1,11 +1,11 @@
-﻿Build started 21.11.2013 18:19:49.
+﻿Build started 03.12.2013 18:43:47.
      1>Project "C:\Users\lav\Documents\GitHub\VSW\VladimirScienceWork\vswMath\vswMath.vcxproj" on node 2 (Rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Release\vswMath.lastbuildstate".
        InitializeBuildStatus:
          Creating "Release\vswMath.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Boost\boost_1_54_0 /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt matLine2D.cpp matLine2DSegment.cpp matTriangle.cpp matVector2D.cpp matVector2DUnit.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Boost\boost_1_54_0 /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt matLine2D.cpp matLine2DSegment.cpp matTriangle.cpp matVector2D.cpp matVector2DUnit.cpp
          matLine2D.cpp
          matLine2DSegment.cpp
          matTriangle.cpp
@@ -25,4 +25,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.75
+Time Elapsed 00:00:01.71

@@ -6,7 +6,7 @@
 
 #define _ASSERT_NULL_POINTER(p)             _ASSERT(p!=NULL)
 #define PI                                  3.14159265358979323846
-#define _POINTS_COMPARISON                  1e-4
+#define _POINTS_COMPARISON                  1e-5
 #define _LINE_DIFF                          1e-6
 #define _ZERO                               1e-8
 #define IS_ZERO(a)                          abs(a) < _ZERO
